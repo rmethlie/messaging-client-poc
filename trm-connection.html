@@ -1,0 +1,71 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="../trm-authentication-sso.html">
+<link rel="import" href="../trm-authentication-simple.html">
+<script src="nitro.js"></script>
+<link rel="import" href="redux-mixin.html">
+
+<dom-module id="trm-connection">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>[[status]]</h2>
+    <div>[[authType]]</div>
+    <!-- SSO -->
+    <template is="dom-if" if="[[authTypeSSO]]">
+      <trm-authentication-sso />
+    </template>
+
+    <!-- Simple -->
+    <template is="dom-if" if="[[authTypeSimple]]">
+      <trm-authentication-simple />
+    </template>
+  </template>
+
+  <script>
+    /**
+     * `trm-connection`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @trm3 index.html
+     */
+    class TRMConnection extends ReduxMixin(Polymer.Element) {
+      static get is() { return 'trm-connection'; }
+      static get properties() {
+        return {
+          status: {
+            type: String,
+            statePath: 'connection.status'
+          },
+          authTypeSSO: {
+            type: Boolean,
+            statePath: state => state.authentication.type === 'sso'
+          },
+          authTypeSimple: {
+            type: Boolean,
+            statePath: state => state.authentication.type === 'simple'
+          }
+        };
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        const authType = this.getAttribute('authType') || 'simple';
+        if (authType) {
+          this.dispatch({
+            type: 'SET_AUTH_TYPE',
+            authType
+          });
+        }
+      }
+    }
+
+    window.customElements.define(TRMConnection.is, TRMConnection);
+  </script>
+</dom-module>

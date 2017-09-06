@@ -1,0 +1,47 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="redux-mixin.html">
+
+<dom-module id="trm-simple-login-form">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <template id="dom-if" if="{{authenticated}}">
+      <iframe src="[[sso.url]]" style="display:none;" />
+    </template>
+    <template id="dom-if" if="{{useSimple}}">
+      <trm-simple-login-form />
+    </template>
+  </template>
+
+  <script>
+    function sso() {
+
+    }
+    /**
+     * `trm-connection`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @trm3 index.html
+     */
+    class TRMSimpleLoginForm extends ReduxMixin(Polymer.Element) {
+      static get is() { return 'trm-simple-login-form'; }
+      static get properties() {
+        return {
+          authenticated: {
+            type: Boolean,
+            statePath: 'authentication.authenticated'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(TRMSimpleLoginForm.is, TRMSimpleLoginForm);
+  </script>
+</dom-module>

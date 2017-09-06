@@ -1,0 +1,36 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="trm3-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `trm3-element`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class Trm3Element extends Polymer.Element {
+      static get is() { return 'trm3-element'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'trm3 is awesome'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(Trm3Element.is, Trm3Element);
+  </script>
+</dom-module>

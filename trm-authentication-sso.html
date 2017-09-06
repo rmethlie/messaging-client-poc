@@ -1,0 +1,58 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="redux-mixin.html">
+
+<dom-module id="trm-authentication-sso">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>SSO Authentication: [[status]]</div>
+  </template>
+
+  <script>
+
+    /**
+     * `trm-authentication`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @trm3 index.html
+     */
+    class TRMAuthenticationSSO extends ReduxMixin(Polymer.Element) {
+      static get is() { return 'trm-authentication-sso'; }
+      static get properties() {
+        return {
+          useSSO: {
+            type: Boolean,
+            statePath: state => state.authentication.type === 'sso'
+          },
+          useSimple: {
+            type: Boolean,
+            statePath: state => state.authentication.type === 'simple'
+          },
+          status: {
+            type: String,
+            statePath: 'authentication.status'
+          },
+          token: {
+            type: String,
+            statePath: 'authentication.token'
+          }
+        };
+      }
+
+      connectedCallback() {
+        console.log('Performing SSO Authentication...');
+        this.dispatch({
+          type: 'AUTHENTICATE_SSO'
+        })
+      }
+    }
+    window.customElements.define(TRMAuthenticationSSO.is, TRMAuthenticationSSO);
+  </script>
+</dom-module>

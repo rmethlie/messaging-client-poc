@@ -1,0 +1,50 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="redux-mixin.html">
+
+<dom-module id="trm-authentication-simple">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>Simple Authentication: [[status]]</div>
+  </template>
+
+  <script>
+
+    /**
+     * `trm-authentication-simple`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @trm3 index.html
+     */
+    class TRMAuthenticationSimple extends ReduxMixin(Polymer.Element) {
+      static get is() { return 'trm-authentication-simple'; }
+      static get properties() {
+        return {
+          status: {
+            type: String,
+            statePath: 'authentication.status'
+          },
+          token: {
+            type: String,
+            statePath: 'authentication.token'
+          }
+        };
+      }
+
+      connectedCallback() {
+        console.log('Performing Simple Authentication...');
+        this.dispatch({
+          type: 'AUTHENTICATE_SIMPLE'
+        })
+      }
+    }
+    window.customElements.define(TRMAuthenticationSimple.is, TRMAuthenticationSimple);
+  </script>
+</dom-module>
