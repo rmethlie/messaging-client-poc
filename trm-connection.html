@@ -3,26 +3,32 @@
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../trm-authentication-sso.html">
 <link rel="import" href="../trm-authentication-simple.html">
+<link rel="import" href="../trm-authentication-dev.html">
 <script src="nitro.js"></script>
-<link rel="import" href="redux-mixin.html">
 
 <dom-module id="trm-connection">
   <template>
     <style>
       :host {
         display: block;
+        background-color: white;
       }
     </style>
     <h2>[[status]]</h2>
     <div>[[authType]]</div>
     <!-- SSO -->
-    <template is="dom-if" if="[[authTypeSSO]]">
+    <template is="dom-if" if="{{authTypeSSO}}">
       <trm-authentication-sso />
     </template>
 
     <!-- Simple -->
-    <template is="dom-if" if="[[authTypeSimple]]">
+    <template is="dom-if" if="{{authTypeSimple}}">
       <trm-authentication-simple />
+    </template>
+
+    <!-- Dev -->
+    <template is="dom-if" if="{{authTypeDev}}">
+      <trm-authentication-dev />
     </template>
   </template>
 
@@ -50,6 +56,10 @@
           authTypeSimple: {
             type: Boolean,
             statePath: state => state.authentication.type === 'simple'
+          },
+          authTypeDev: {
+            type: Boolean,
+            statePath: state => state.authentication.type === 'dev'
           }
         };
       }
@@ -58,6 +68,7 @@
         super.connectedCallback();
         const authType = this.getAttribute('authType') || 'simple';
         if (authType) {
+          console.log('setting auth type to', authType);
           this.dispatch({
             type: 'SET_AUTH_TYPE',
             authType

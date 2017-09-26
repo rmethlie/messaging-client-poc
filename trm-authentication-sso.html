@@ -9,8 +9,15 @@
       :host {
         display: block;
       }
+      iframe {
+        display: none;
+      }
     </style>
     <div>SSO Authentication: [[status]]</div>
+    <template is="dom-if" if="{{iframeEnabled}}">
+      <div>added iframe!!!</div>
+      <iframe src="{{ssoUrl}}"></iframe>
+    </template>
   </template>
 
   <script>
@@ -42,15 +49,31 @@
           token: {
             type: String,
             statePath: 'authentication.token'
+          },
+          iframeEnabled: {
+            type: Boolean,
+            value: false
+          },
+          ssoUrl: {
+            type: String,
+            statePath: state => {
+              return `${state.authentication.config.sso.url}?cacheBust=${new Date().getTime()}&requestId=1`
+            }
           }
-        };
+        }
       }
 
       connectedCallback() {
+        super.connectedCallback();
         console.log('Performing SSO Authentication...');
-        this.dispatch({
-          type: 'AUTHENTICATE_SSO'
-        })
+        this.iframeEnabled = true;
+        // this.dispatch({
+        //   type: 'AUTHENTICATE_SSO',
+        //   data: {
+        //     jid: 'russ3.methlie.thomsonreuters.com@reuasmb.net',
+        //     password: 'Welcome1'
+        //   }
+        // })
       }
     }
     window.customElements.define(TRMAuthenticationSSO.is, TRMAuthenticationSSO);

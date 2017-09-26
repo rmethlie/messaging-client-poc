@@ -3,7 +3,7 @@
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="redux-mixin.html">
 
-<dom-module id="trm-authentication-simple">
+<dom-module id="trm-authentication-dev">
   <template>
     <style>
       :host {
@@ -15,15 +15,15 @@
   <script>
 
     /**
-     * `trm-authentication-simple`
+     * `trm-authentication-dev`
      *
      *
      * @customElement
      * @polymer
      * @trm3 index.html
      */
-    class TRMAuthenticationSimple extends ReduxMixin(Polymer.Element) {
-      static get is() { return 'trm-authentication-simple'; }
+    class TRMAuthenticationDev extends ReduxMixin(Polymer.Element) {
+      static get is() { return 'trm-authentication-dev'; }
       static get properties() {
         return {
           isAuthenticated: {
@@ -40,7 +40,19 @@
           }
         };
       }
+
+      connectedCallback() {
+        super.connectedCallback();
+        console.log('dispatching connect');
+        this.dispatch({
+          type: 'CONNECT',
+          data: {
+            jid: 'russ3.methlie.thomsonreuters.com@reuasmb.net',
+            password: 'Welcome1'
+          }
+        });
+      }
     }
-    window.customElements.define(TRMAuthenticationSimple.is, TRMAuthenticationSimple);
+    window.customElements.define(TRMAuthenticationDev.is, TRMAuthenticationDev);
   </script>
 </dom-module>

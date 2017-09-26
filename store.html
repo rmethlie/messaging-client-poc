@@ -1,7 +1,8 @@
 <script src="node_modules/redux/dist/redux.js"></script>
+<script src="node_modules/tree-model/dist/TreeModel.js"></script>
 <script src="reducers.js"></script>
 <script>
-  const reducers = Redux.combineReducers({connection, authentication});
+  const reducers = Redux.combineReducers({connection, authentication, containers});
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || Redux.compose;
   const store =
     Redux.createStore(

@@ -4,12 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
     <title>trm3-connection demo</title>
-    <link rel="import" href="../trm-connection.html">
+    <link rel="import" href="trm-connection.html">
+    <link rel="import" href="trm-user-interface.html">
   </head>
   <body>
-    <div class="vertical-section-container centered">
-      <h3>Basic trm-connection demo</h3>
-      <trm-connection authType="sso"/>
+    <div>
+      <div>TRM3</div>
+      <trm-connection authType="dev"></trm-connection>
+      <trm-user-interface></trm-user-interface>
     </div>
   </body>
 </html>

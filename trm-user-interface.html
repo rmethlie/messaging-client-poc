@@ -1,0 +1,79 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="../trm-simple-login-ui.html">
+<link rel="import" href="../trm-sso-login-ui.html">
+<link rel="import" href="../trm-container.html">
+<link rel="import" href="redux-mixin.html">
+
+<dom-module id="trm-user-interface">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>Heres the containers</div>
+    <trm-container id="0"></trm-container>
+  </template>
+
+  <script>
+    /**
+     * `trm-connection`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @trm3 index.html
+     */
+    class TRMUserInterface extends ReduxMixin(Polymer.Element) {
+      static get is() { return 'trm-user-interface'; }
+      static get properties() {
+        return {
+          status: {
+            type: String,
+            statePath: 'connection.status'
+          },
+          authTypeSSO: {
+            type: Boolean,
+            statePath: state => state.authentication.type === 'sso'
+          },
+          authTypeSimple: {
+            type: Boolean,
+            statePath: state => state.authentication.type === 'simple'
+          }
+        };
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        this.dispatch({
+          type: 'ADD_CONTAINER',
+          data: {
+            id: '1',
+            title: 'First Child'
+          }
+        });
+
+        this.dispatch({
+          type: 'ADD_CONTAINER',
+          data: {
+            id: '2',
+            title: 'Child of First Child',
+            parent: '1'
+          }
+        });
+
+        this.dispatch({
+          type: 'ADD_CONTAINER',
+          data: {
+            id: '3',
+            title: 'Second Child',
+          }
+        });
+      }
+    }
+
+    window.customElements.define(TRMUserInterface.is, TRMUserInterface);
+  </script>
+</dom-module>

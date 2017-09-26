@@ -1,0 +1,75 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="redux-mixin.html">
+
+<dom-module id="trm-container">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .container {
+        margin: 10px;
+        background-color: red;
+        color: white;
+        padding: 10px;
+      }
+    </style>
+    <div class="container">
+      <div>{{title}}</div>
+      <template is="dom-if" if="{{nested}}">
+        <div>has children</div>
+        <template is="dom-repeat" items={{nested}}>
+          <div>{{item.model.title}}</div>
+          <trm-container id={{item.model._id}}></trm-container></div>
+        </template>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * `trm-container`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @trm3 index.html
+     */
+    const nodeFinder = (id) => (node) => {
+      return node.model._id === id;
+    }
+    class TRMContainer extends ReduxMixin(Polymer.Element) {
+      static get is() { return 'trm-container'; }
+      static get properties() {
+        return {
+          title: {
+            type: String,
+            statePath: function (state) {
+              const config = state.containers.first(nodeFinder(this.id));
+              if (config && config.model.title) {
+                return config.model.title;
+              }
+              return 'Untitled Container';
+            }
+          },
+          nested: {
+            type: Array,
+            statePath: function(state) {
+              if (typeof this.id === 'undefined') { debugger; }
+              const config = state.containers.first(nodeFinder(this.id));
+              console.log('children', this.id);
+              return config.children;
+            }
+          },
+          id: {
+            type: String
+          }
+        };
+      }
+    }
+
+    window.customElements.define(TRMContainer.is, TRMContainer);
+  </script>
+</dom-module>
