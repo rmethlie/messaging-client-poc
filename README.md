@@ -6,10 +6,20 @@
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.
 
+## Install bower stuff
+```
+$ bower install
+```
+
+## Install npm stuff
+```
+$ npm install
+```
+
 ## Viewing Your Element
 
 ```
-$ polymer serve
+$ polymer serve --proxy-path /nhttp-bind/ --proxy-target https://collab.reutest.com/nhttp-bind/
 ```
 
 ## Running Tests
