@@ -21,6 +21,9 @@ $ npm install
 $ polymer serve --proxy-path /nhttp-bind/ --proxy-target https://collab.reutest.com/nhttp-bind/
 ```
 
+## View in browser
+[localhost:8081/](http://localhost:8081)
+
 ## Running Tests
 
 ```
