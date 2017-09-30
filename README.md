@@ -22,7 +22,7 @@ $ polymer serve --proxy-path /nhttp-bind/ --proxy-target https://collab.reutest.
 ```
 
 ## View in browser
-<a href="http://localhost:8081" target="_blank">localhost:8081/</a>
+[localhost:8081/](http://localhost:8081){:target="_blank"}
 
 ## Running Tests
 
