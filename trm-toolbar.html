@@ -1,0 +1,149 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="redux-mixin.html">
+
+<dom-module id="trm-toolbar">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin: 0 5px;
+        background-color: #191919;
+        color: white;
+        padding: 0;
+        overflow-y: hidden;
+        overflow-x: auto;
+        min-height: 16px;
+        border: solid blue 1px;
+      }
+
+      .buttons {
+        display: flex;
+        flex-flow: row;
+      }
+
+      button {
+        max-width: 24px;
+        max-height: 24px;
+      }
+    </style>
+    <div class="buttons">
+      <template is="dom-repeat" items={{tools}}>
+        <button
+          data-tool-action$="{{ getActionForTool(item) }}"
+          on-click="handleToolClick"
+        >{{item.label}}</button>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * `trm-toolbar`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @trm3 index.html
+     */
+
+    class TRMToolbar extends ReduxMixin(Polymer.Element) {
+      static get is() { return 'trm-toolbar'; }
+      static get properties() {
+        return {
+          tools: {
+            type: Array,
+            statePath: function(state) {
+              const container = this.getContainer();
+              const tools = [];
+              tools.push({
+                label: '+',
+                tooltip: 'Add Child Container',
+                action: 'ADD_CONTAINER'
+              });
+
+              if (container.children.length > 1) {
+                const currentFlow = this.getFlow();
+                tools.push({
+                  label: currentFlow.label,
+                  tooltip: 'Cycle Flow Style',
+                  action: 'CYCLE_FLOW'
+                });
+              }
+
+              return tools;
+            }
+          }
+        };
+      }
+
+      constructor() {
+        super();
+        this.container = this.getContainer();
+        this.flowIndex = 0;
+        this.flows = [{
+            label: String.fromCharCode(8594),
+            value: 'row'
+          }, {
+            label: String.fromCharCode(8617),
+            value: 'row wrap'
+          }, {
+            label: String.fromCharCode(8595),
+            value: 'column'
+          }
+        ]
+      }
+
+      getContainer() {
+        const containerId = this.getAttribute('data-container-id');
+        const container = this.getState().containers.byId[containerId];
+        return container;
+      }
+
+      getFlow() {
+        return this.flows[this.flowIndex];
+      }
+
+      getNextFlow() {
+        this.flowIndex += 1;
+        if (this.flowIndex === this.flows.length) {
+          this.flowIndex = 0;
+        }
+        return this.getFlow();
+      }
+
+      getActionForTool(tool) {
+        return tool.action;
+      }
+
+      handleToolClick(event) {
+        const action = event.target.getAttribute('data-tool-action');
+        console.log('dispatching', action);
+        switch (action) {
+          case 'ADD_CONTAINER':
+            this.dispatch({
+              type: 'ADD_CONTAINER',
+              data: {
+                parent: this.getAttribute('data-container-id')
+              }
+            });
+            break;
+          case 'CYCLE_FLOW': {
+            const container = this.getContainer();
+            const id = container.id;
+            const nextFlow = this.getNextFlow();
+            this.dispatch({
+              type: 'SET_LAYOUT',
+              data: {id, flow: nextFlow.value}
+            })
+            break;
+          }
+        }
+      }
+
+    }
+
+    window.customElements.define(TRMToolbar.is, TRMToolbar);
+  </script>
+</dom-module>

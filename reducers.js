@@ -1,3 +1,5 @@
+'use strict';
+
 const STATUS_LABELS = [
   'INITIAL',
   'CONNECTING',
@@ -117,37 +119,60 @@ const authentication = (state = defaultAuthenticationState, action = {}) => {
   }
 }
 
-const containerTree = new TreeModel();
 const defaultContainerState = {
-  _id: '0',
-  title: 'Untitled Container'
+  id: 'root',
+  children: [],
+  layout: {
+    direction: 'column'
+  }
 }
-const defaultContainersState = Object.assign({}, defaultContainerState, {
-  title: 'Root Container'
-});
-console.log('defaultContainersState', defaultContainersState);
-const containersRoot = containerTree.parse(defaultContainersState);
+const defaultContainersState = {
+  byId: {
+    'root': Object.assign({}, defaultContainerState, {
+      title: 'Root Container',
+      layout: {
+        flow: 'row'
+      }
+    })
+  },
+}
 
-function createContainer(config) {
-  return containerTree.parse({
-    _id: config.id,
-    title: config.title
-  });
-}
+const generateContainerId =
+  () => `${Math.floor(Math.random() * (1000000 - 1) + 1)}`;
 
 function addContainer(state, action) {
-  const containerNode = createContainer(action.data);
+  const container = Object.assign({}, {
+    id: generateContainerId(),
+    children: [],
+    layout: {
+      flow: 'column'
+    }
+  }, action.data);
   // should we add to some other child or the root?
-  const parent = action.data.parent ?
-    containersRoot.first((node) => {
-      return node.model._id === action.data.parent
-    }) :
-    containersRoot;
-  // add new child to parent
-  parent.addChild(containerNode);
+  const parentId = action.data.parent || 'root';
+  // cant be your own child
+  if (container.id === parentId) {
+    return state;
+  }
+  // cant have parent as one of your own children
+  if (container.children.indexOf(parentId) > -1) {
+    return state;
+  }
+  // go get the parent
+  const parent = state.byId[parentId];
+  // if there is a parent, and container is not already a child
+  if (parent && parent.children.indexOf(parentId) === -1) {
+    // add the container as a new child
+    parent.children = [...parent.children, container.id];
+  }
+  // add container to the flat index
+  state.byId = Object.assign({}, state.byId, {
+    [container.id]: container
+  });
   // return the new containers object
-  return containersRoot;
+  return state;
 }
+
 
 function removeContainer(state, action) {
   const containerId = action.data.id;
@@ -156,14 +181,27 @@ function removeContainer(state, action) {
   return Object.assign({}, state, containers);
 }
 
-const containers = (state = containersRoot, action = {}) => {
+function setLayout(state, action) {
+  const container = state.byId[action.data.id];
+  if (container) {
+    const updatedContainer = Object.assign({}, container);
+    updatedContainer.layout =
+      Object.assign({}, updatedContainer.layout, action.data);
+    return Object.assign({}, state, {
+      byId: Object.assign({}, state.byId, {[updatedContainer.id]: updatedContainer})
+    });
+  }
+  return state;
+}
+
+const containers = (state = defaultContainersState, action = {}) => {
   switch (action.type) {
     case 'ADD_CONTAINER':
       return addContainer(state, action);
-      break;
     case 'REMOVE_CONTAINER':
       return removeContainer(state, action);
-      break;
+    case 'SET_LAYOUT':
+      return setLayout(state, action);
     default:
       return state;
   }

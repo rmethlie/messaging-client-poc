@@ -10,11 +10,15 @@
   <template>
     <style>
       :host {
-        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
       }
     </style>
-    <div>Heres the containers</div>
-    <trm-container id="0"></trm-container>
+    <trm-container class="root" id="root"></trm-container>
   </template>
 
   <script>
@@ -47,6 +51,7 @@
 
       connectedCallback() {
         super.connectedCallback();
+        return;
         this.dispatch({
           type: 'ADD_CONTAINER',
           data: {
@@ -59,8 +64,7 @@
           type: 'ADD_CONTAINER',
           data: {
             id: '2',
-            title: 'Child of First Child',
-            parent: '1'
+            title: 'Second Child',
           }
         });
 
@@ -68,7 +72,102 @@
           type: 'ADD_CONTAINER',
           data: {
             id: '3',
-            title: 'Second Child',
+            title: '1st Child of 1st Child',
+            parent: '1'
+          }
+        });
+
+        this.dispatch({
+          type: 'ADD_CONTAINER',
+          data: {
+            id: '4',
+            title: '2nd Child of 1st Child',
+            parent: '1'
+          }
+        });
+
+
+        this.dispatch({
+          type: 'ADD_CONTAINER',
+          data: {
+            id: '5',
+            title: '3rd Child of 1st Child',
+            parent: '1'
+          }
+        });
+
+
+        this.dispatch({
+          type: 'ADD_CONTAINER',
+          data: {
+            id: '6',
+            title: '4th Child of 1st Child',
+            parent: '1'
+          }
+        });
+
+
+        this.dispatch({
+          type: 'ADD_CONTAINER',
+          data: {
+            id: '7',
+            title: '5th Child of 1st Child',
+            parent: '1'
+          }
+        });
+
+
+        this.dispatch({
+          type: 'ADD_CONTAINER',
+          data: {
+            id: '8',
+            title: '1st Child of 2nd Child',
+            parent: '2'
+          }
+        });
+
+        this.dispatch({
+          type: 'ADD_CONTAINER',
+          data: {
+            id: '9',
+            title: '2nd Child of 2nd Child',
+            parent: '2'
+          }
+        });
+
+        this.dispatch({
+          type: 'ADD_CONTAINER',
+          data: {
+            id: '10',
+            title: '3rd Child of 2nd Child',
+            parent: '2'
+          }
+        });
+
+        this.dispatch({
+          type: 'ADD_CONTAINER',
+          data: {
+            id: '11',
+            title: '4th Child of 2nd Child',
+            parent: '2'
+          }
+        });
+
+        this.dispatch({
+          type: 'ADD_CONTAINER',
+          data: {
+            id: '12',
+            title: '5th Child of 2nd Child',
+            parent: '2'
+          }
+        });
+
+
+        this.dispatch({
+          type: 'ADD_CONTAINER',
+          data: {
+            id: '13',
+            title: 'Third Child',
           }
         });
       }

@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../trm-toolbar.html">
 <link rel="import" href="redux-mixin.html">
 
 <dom-module id="trm-container">
@@ -8,22 +9,58 @@
     <style>
       :host {
         display: block;
-      }
-      .container {
-        margin: 10px;
-        background-color: red;
+        flex-grow: 1;
+        margin: 0;
+        background-color: #191919;
         color: white;
         padding: 10px;
+        border: solid #242424 1px;
+        resize: both;
+        overflow: visible;
+        min-width: 100px;
       }
+
+      :host(.root) {
+        resize: none !important;
+        margin: 0;
+        padding: 25px;
+      }
+
+      :host(.root) .children {
+        flex-flow: row;
+      }
+
+      .children {
+        display: flex;
+        min-width: 100px;
+        flex-basis: auto;
+        padding: 10px;
+        border: solid red 1px;
+        width: 100%;
+      }
+
+      .children.row {
+        flex-flow: row;
+      }
+
+      .children.column {
+        flex-flow: column;
+      }
+
+      .children.row.wrap {
+        flex-flow: row wrap;
+      }
+
+      .children.column.wrap {
+        flex-flow: column wrap;
+      }
+
     </style>
-    <div class="container">
-      <div>{{title}}</div>
-      <template is="dom-if" if="{{nested}}">
-        <div>has children</div>
-        <template is="dom-repeat" items={{nested}}>
-          <div>{{item.model.title}}</div>
-          <trm-container id={{item.model._id}}></trm-container></div>
-        </template>
+    <div class="title">{{title}}</div>
+    <trm-toolbar data-container-id$="{{id}}"></trm-toolbar>
+    <div class$="{{layoutClasses}}">
+      <template is="dom-repeat" items={{nested}}>
+        <trm-container id="{{item}}"></trm-container></div>
       </template>
     </div>
   </template>
@@ -37,9 +74,6 @@
      * @polymer
      * @trm3 index.html
      */
-    const nodeFinder = (id) => (node) => {
-      return node.model._id === id;
-    }
     class TRMContainer extends ReduxMixin(Polymer.Element) {
       static get is() { return 'trm-container'; }
       static get properties() {
@@ -47,26 +81,38 @@
           title: {
             type: String,
             statePath: function (state) {
-              const config = state.containers.first(nodeFinder(this.id));
-              if (config && config.model.title) {
-                return config.model.title;
+              const containerConfig = state.containers.byId[this.id];
+              if (containerConfig && containerConfig.title) {
+                return containerConfig.title;
               }
-              return 'Untitled Container';
+              return `Container ${containerConfig.id}`;
             }
           },
           nested: {
             type: Array,
             statePath: function(state) {
-              if (typeof this.id === 'undefined') { debugger; }
-              const config = state.containers.first(nodeFinder(this.id));
-              console.log('children', this.id);
-              return config.children;
+              const containerConfig = state.containers.byId[this.id];
+              return containerConfig.children.length ? containerConfig.children : false;
             }
           },
           id: {
             type: String
+          },
+          layoutClasses: {
+            type: String,
+            statePath: function(state) {
+              const layout = state.containers.byId[this.id].layout;
+              const classList = ['children'];
+              // left right (row) or up down (column)
+              classList.push(layout.flow);
+              return classList.join(' ');
+            }
           }
         };
+      }
+
+      getId() {
+        return this.id;
       }
     }
 

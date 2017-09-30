@@ -9,13 +9,8 @@
 <dom-module id="trm-connection">
   <template>
     <style>
-      :host {
-        display: block;
-        background-color: white;
-      }
+      :host {}
     </style>
-    <h2>[[status]]</h2>
-    <div>[[authType]]</div>
     <!-- SSO -->
     <template is="dom-if" if="{{authTypeSSO}}">
       <trm-authentication-sso />
