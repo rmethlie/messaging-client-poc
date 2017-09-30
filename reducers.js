@@ -131,7 +131,7 @@ const defaultContainersState = {
     'root': Object.assign({}, defaultContainerState, {
       title: 'Root Container',
       layout: {
-        flow: 'row'
+        flow: 'row wrap'
       }
     })
   },

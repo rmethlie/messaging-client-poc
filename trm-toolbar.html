@@ -8,14 +8,14 @@
     <style>
       :host {
         display: block;
-        margin: 0 5px;
-        background-color: #191919;
-        color: white;
+        margin: 0;
         padding: 0;
+        min-height: 16px;
+        width: 100%;
+        border-bottom: dotted #aaa 1px;
+        color: white;
         overflow-y: hidden;
         overflow-x: auto;
-        min-height: 16px;
-        border: solid blue 1px;
       }
 
       .buttons {
@@ -80,25 +80,29 @@
 
       constructor() {
         super();
-        this.container = this.getContainer();
-        this.flowIndex = 0;
         this.flows = [{
-            label: String.fromCharCode(8594),
-            value: 'row'
-          }, {
             label: String.fromCharCode(8617),
             value: 'row wrap'
           }, {
             label: String.fromCharCode(8595),
             value: 'column'
-          }
-        ]
+        }];
+
       }
 
       getContainer() {
         const containerId = this.getAttribute('data-container-id');
         const container = this.getState().containers.byId[containerId];
         return container;
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        const container = this.getContainer();
+        function flowIndexFinder(flow) {
+          return flow.value === container.layout.flow;
+        }
+        this.flowIndex = this.flows.findIndex(flowIndexFinder.bind(this));
       }
 
       getFlow() {

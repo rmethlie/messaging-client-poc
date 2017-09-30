@@ -10,14 +10,12 @@
       :host {
         display: block;
         flex-grow: 1;
-        margin: 0;
-        background-color: #191919;
+        margin: 0 5px;
+        background-color: rgba(50, 50, 50, 0.5);
         color: white;
-        padding: 10px;
-        border: solid #242424 1px;
         resize: both;
         overflow: visible;
-        min-width: 100px;
+        margin-left: 5px;
       }
 
       :host(.root) {
@@ -30,13 +28,14 @@
         flex-flow: row;
       }
 
+      .title {
+        margin-left: 5px;
+      }
+
       .children {
         display: flex;
-        min-width: 100px;
         flex-basis: auto;
-        padding: 10px;
-        border: solid red 1px;
-        width: 100%;
+        justify-content: space-between;
       }
 
       .children.row {
@@ -53,6 +52,10 @@
 
       .children.column.wrap {
         flex-flow: column wrap;
+      }
+
+      .children trm-container:nth-child(odd) {
+        background-color: rgba(70, 70, 70, 0.5)
       }
 
     </style>
