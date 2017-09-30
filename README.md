@@ -16,8 +16,7 @@ $ bower install
 $ npm install
 ```
 
-## Viewing Your Element
-
+## Start polymer dev server (with proxy to beta)
 ```
 $ polymer serve --proxy-path /nhttp-bind/ --proxy-target https://collab.reutest.com/nhttp-bind/
 ```
