@@ -1,7 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
-<link rel="import" href="redux-mixin.html">
 
 <dom-module id="trm-authentication-dev">
   <template>
@@ -12,47 +11,5 @@
     </style>
   </template>
 
-  <script>
-
-    /**
-     * `trm-authentication-dev`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @trm3 index.html
-     */
-    class TRMAuthenticationDev extends ReduxMixin(Polymer.Element) {
-      static get is() { return 'trm-authentication-dev'; }
-      static get properties() {
-        return {
-          isAuthenticated: {
-            type: Boolean,
-            statePath: state => state.authentication.status === 'AUTHENTICATED'
-          },
-          status: {
-            type: String,
-            statePath: 'authentication.status'
-          },
-          token: {
-            type: String,
-            statePath: 'authentication.token'
-          }
-        };
-      }
-
-      connectedCallback() {
-        super.connectedCallback();
-        console.log('dispatching connect');
-        this.dispatch({
-          type: 'CONNECT',
-          data: {
-            jid: 'russ3.methlie.thomsonreuters.com@reuasmb.net',
-            password: 'Welcome1'
-          }
-        });
-      }
-    }
-    window.customElements.define(TRMAuthenticationDev.is, TRMAuthenticationDev);
-  </script>
+  <script type="module" src="trm-authentication-dev.js"></script>
 </dom-module>

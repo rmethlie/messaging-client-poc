@@ -4,11 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
     <title>trm3-connection demo</title>
+    <script src="./node_modules/redux/dist/redux.js"></script>
+    <script src="text_marker.js"></script>
+    <link rel="import" href="bower_components/polymer-redux/polymer-redux.html">
+    <link rel="import" href="trm-client.html">
     <link rel="import" href="trm-connection.html">
     <link rel="import" href="trm-user-interface.html">
   </head>
   <body style="margin: 0;">
-    <trm-connection authType="dev"></trm-connection>
-    <trm-user-interface></trm-user-interface>
+    <trm-client></trm-client>
   </body>
 </html>

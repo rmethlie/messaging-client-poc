@@ -1,0 +1,82 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../trm-toolbar.html">
+<link rel="import" href="../trm-container.html">
+<link rel="import" href="redux-mixin.html">
+
+<dom-module id="trm-root-container">
+  <template>
+    <style>
+      :host {
+        /* for this host */
+        min-width: 100%;
+        min-height: 100%;
+        display: flex;
+        flex-flow: row;
+        background-color: rgba(50, 50, 50, 0.5);
+        color: white;
+        resize: none !important;
+        margin: 0;
+        padding: 0;
+      }
+
+      .title {
+        height: 25px;
+        margin-left: 5px;
+      }
+
+      .containers {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        flex-flow: column;
+        justify-content: start;
+        align-content: stretch;
+      }
+
+      .containers.row {
+        flex-flow: row;
+      }
+
+      .containers.row.wrap {
+        flex-flow: row wrap;
+      }
+
+      .containers.column {
+        flex-flow: column;
+      }
+
+      .containers.column.wrap {
+        flex-flow: column wrap;
+      }
+
+      .containers trm-container:nth-child(odd) {
+        background-color: rgba(70, 70, 70, 0.5)
+      }
+
+      .containers trm-container#roster {
+        width: 200px;
+      }
+
+    </style>
+
+    <template is="dom-if" if="{{initialized}}">
+      <div class="title">{{title}}</div>
+      <trm-toolbar data-container-id="root"></trm-toolbar>
+      <div class$="{{containersClasses}}">
+        <template is="dom-repeat" items={{containers}}>
+          <trm-container data-parent-id="root" id$="{{item}}"></trm-container></div>
+        </template>
+      </div>
+    </template>
+    <template is="dom-if" if="{{!initialized}}">
+      <div>Initializing...</div>
+    </template>
+  </template>
+
+  <script type="module" src="trm-root-container.js"></script>
+</dom-module>

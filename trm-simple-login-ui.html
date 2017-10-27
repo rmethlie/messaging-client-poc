@@ -1,8 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
-<link rel="import" href="redux-mixin.html">
-
 <dom-module id="trm-simple-login-ui">
   <template>
     <style>
@@ -18,46 +16,5 @@
       </form>
     </template>
   </template>
-
-  <script>
-    function sso() {
-
-    }
-    /**
-     * `trm-connection`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @trm3 index.html
-     */
-    class TRMSimpleLoginUI extends ReduxMixin(Polymer.Element) {
-      static get is() { return 'trm-simple-login-ui'; }
-      static get properties() {
-        return {
-          authenticated: {
-            type: Boolean,
-            statePath: state => state.authentication.status === 'AUTHENTICATED'
-          },
-          jid: String
-        };
-      }
-
-      onSubmit(event) {
-        // important.  without it, loops abound...
-        event.preventDefault();
-        // get the values
-        const jid = event.target.jid.value;
-        const password = event.target.password.value;
-        // dispatch the action
-        this.dispatch({
-          type: 'AUTHENTICATE_SIMPLE',
-          data: {jid, password}
-        });
-        event.target.password.value = '';
-      }
-    }
-
-    window.customElements.define(TRMSimpleLoginUI.is, TRMSimpleLoginUI);
-  </script>
+  <script type="module" src="trm-simple-login-ui.js"></script>
 </dom-module>

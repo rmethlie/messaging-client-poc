@@ -1,0 +1,3 @@
+#!/bin/bash
+
+polymer serve --proxy-path /nhttp-bind/ --proxy-target https://collab.reutest.com/nhttp-bind/

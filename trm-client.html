@@ -1,53 +1,24 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
-<link rel="import" href="../trm-simple-login-ui.html">
-<link rel="import" href="../trm-sso-login-ui.html">
-<link rel="import" href="redux-mixin.html">
 
 <dom-module id="trm-client">
   <template>
     <style>
       :host {
-        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: #000;
       }
-      background-color: white;
     </style>
+    <trm-connection authType="dev">
+      <config>something</config>
+      <div>div</div>
+    </trm-connection>
+    <trm-user-interface></trm-user-interface>
   </template>
-
-  <script>
-    /**
-     * `trm-connection`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @trm3 index.html
-     */
-    class TRMClient extends ReduxMixin(Polymer.Element) {
-      static get is() { return 'trm-client'; }
-      static get properties() {
-        return {
-          status: {
-            type: String,
-            statePath: 'connection.status'
-          },
-          authTypeSSO: {
-            type: Boolean,
-            statePath: state => state.authentication.type === 'sso'
-          },
-          authTypeSimple: {
-            type: Boolean,
-            statePath: state => state.authentication.type === 'simple'
-          }
-        };
-      }
-
-      connectedCallback() {
-        super.connectedCallback();
-      }
-    }
-
-    window.customElements.define(TRMClient.is, TRMClient);
-  </script>
+  <script type="module" src="trm-client.js"></script>
 </dom-module>

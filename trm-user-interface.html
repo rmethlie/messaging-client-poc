@@ -1,10 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
-<link rel="import" href="../trm-simple-login-ui.html">
-<link rel="import" href="../trm-sso-login-ui.html">
-<link rel="import" href="../trm-container.html">
-<link rel="import" href="redux-mixin.html">
+<link rel="import" href="../trm-roster-container.html">
+<link rel="import" href="../trm-conversations-container.html">
 
 <dom-module id="trm-user-interface">
   <template>
@@ -15,164 +13,24 @@
         right: 0;
         bottom: 0;
         left: 0;
+        color: white;
+      }
+
+      .interface {
         display: flex;
+        flex-flow: row;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
       }
     </style>
-    <trm-container class="root" id="root"></trm-container>
+    <div class="interface">
+      <trm-roster-container></trm-roster-container>
+      <trm-conversations-container></trm-conversations-container>
+    </div>
   </template>
 
-  <script>
-    /**
-     * `trm-connection`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @trm3 index.html
-     */
-    class TRMUserInterface extends ReduxMixin(Polymer.Element) {
-      static get is() { return 'trm-user-interface'; }
-      static get properties() {
-        return {
-          status: {
-            type: String,
-            statePath: 'connection.status'
-          },
-          authTypeSSO: {
-            type: Boolean,
-            statePath: state => state.authentication.type === 'sso'
-          },
-          authTypeSimple: {
-            type: Boolean,
-            statePath: state => state.authentication.type === 'simple'
-          }
-        };
-      }
-
-      connectedCallback() {
-        super.connectedCallback();
-        return;
-        this.dispatch({
-          type: 'ADD_CONTAINER',
-          data: {
-            id: '1',
-            title: 'First Child'
-          }
-        });
-
-        this.dispatch({
-          type: 'ADD_CONTAINER',
-          data: {
-            id: '2',
-            title: 'Second Child',
-          }
-        });
-
-        this.dispatch({
-          type: 'ADD_CONTAINER',
-          data: {
-            id: '3',
-            title: '1st Child of 1st Child',
-            parent: '1'
-          }
-        });
-
-        this.dispatch({
-          type: 'ADD_CONTAINER',
-          data: {
-            id: '4',
-            title: '2nd Child of 1st Child',
-            parent: '1'
-          }
-        });
-
-
-        this.dispatch({
-          type: 'ADD_CONTAINER',
-          data: {
-            id: '5',
-            title: '3rd Child of 1st Child',
-            parent: '1'
-          }
-        });
-
-
-        this.dispatch({
-          type: 'ADD_CONTAINER',
-          data: {
-            id: '6',
-            title: '4th Child of 1st Child',
-            parent: '1'
-          }
-        });
-
-
-        this.dispatch({
-          type: 'ADD_CONTAINER',
-          data: {
-            id: '7',
-            title: '5th Child of 1st Child',
-            parent: '1'
-          }
-        });
-
-
-        this.dispatch({
-          type: 'ADD_CONTAINER',
-          data: {
-            id: '8',
-            title: '1st Child of 2nd Child',
-            parent: '2'
-          }
-        });
-
-        this.dispatch({
-          type: 'ADD_CONTAINER',
-          data: {
-            id: '9',
-            title: '2nd Child of 2nd Child',
-            parent: '2'
-          }
-        });
-
-        this.dispatch({
-          type: 'ADD_CONTAINER',
-          data: {
-            id: '10',
-            title: '3rd Child of 2nd Child',
-            parent: '2'
-          }
-        });
-
-        this.dispatch({
-          type: 'ADD_CONTAINER',
-          data: {
-            id: '11',
-            title: '4th Child of 2nd Child',
-            parent: '2'
-          }
-        });
-
-        this.dispatch({
-          type: 'ADD_CONTAINER',
-          data: {
-            id: '12',
-            title: '5th Child of 2nd Child',
-            parent: '2'
-          }
-        });
-
-
-        this.dispatch({
-          type: 'ADD_CONTAINER',
-          data: {
-            id: '13',
-            title: 'Third Child',
-          }
-        });
-      }
-    }
-
-    window.customElements.define(TRMUserInterface.is, TRMUserInterface);
-  </script>
+  <script type="module" src="trm-user-interface.js"></script>
 </dom-module>

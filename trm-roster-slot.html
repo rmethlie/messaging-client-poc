@@ -1,0 +1,90 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="../trm-toolbar.html">
+<link rel="import" href="redux-mixin.html">
+
+<dom-module id="trm-roster-slot">
+  <template>
+    <style>
+      :host {
+        position: relative;
+        display: block;
+        margin: 5px;
+        background-color: rgba(50, 50, 50, 0.8);
+        color: white;
+        resize: both;
+        height: 15%;
+        width: 15%;
+      }
+
+      .header {
+        width: 100%;
+      }
+
+      .name {
+        margin-left: 5px;
+        min-height: 25px;
+        min-width: 100%;
+      }
+      .presence {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        background-color: rgba(100, 100, 100, 0.5);
+      }
+
+      .presence.unavailable {
+        background-color: rgba(100, 100, 100, 0.5);
+      }
+      .presence.available {
+        background-color: rgba(50, 175, 75, 0.5);
+      }
+      .presence.busy {
+        background-color: rgba(200, 25, 25, 0.5);
+      }
+      .presence.away {
+        background-color: rgba(200, 175, 75, 0.5);
+      }
+
+      .index {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(100, 100, 100, 0.2);
+        font-size:8pt;
+        color: white;
+        text-align: center;
+      }
+
+      .index.visible {
+        background-color: rgba(100, 100, 100, 0.5);
+      }
+
+      .index:hover {
+        background-color: rgba(200, 100, 100, 0.8);
+      }
+
+    </style>
+    <div class="sensor" on-click="{{handleMouse}}" on-mouseover="{{handleMouse}}" on-mouseout="{{handleMouse}}">
+      <!-- content: { jid, name, email, company, presence, status } -->
+      <div class="header">
+        <div class$="{{presenceClasses}}"></div>
+        <div class="index">{{index}}</div>
+        <trm-toolbar data-container-id$="{{id}}">
+          <template is="dom-repeat" items="{{tools}}">
+            <tool action$="{{item.action}}" label$="{{item.label}}"></tool>
+          </template>
+        </trm-toolbar>
+        <div class="name">{{content.name}}</div>
+      </div>
+      <div class$="{{slotClasses}}"></div>
+    </div>
+  </template>
+
+  <script type="module" src="trm-roster-slot.js"></script>
+</dom-module>
