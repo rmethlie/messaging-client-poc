@@ -22,9 +22,10 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
       activeClass: {
         type: String,
         statePath: function(state) {
-          return state.containers.active === this.id ? 'active' : '';
+          const id = this.getAttribute('id');
+          return state.containers.active === id ? 'active' : 'inactive';
         }
-      }
+      },
       title: {
         type: String,
         statePath: function (state) {
@@ -221,7 +222,6 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
   }
 
   handleClick() {
-    console.log('click');
     const id = this.id;
     this.dispatch({
       type: 'SET_ACTIVE',
@@ -229,7 +229,16 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
     })
   }
 
+  handleMouseOver() {
+
+  }
+
+  handleMouseOut() {
+
+  }
+
   handleMouse() {
+    console.log('event', event.type);
     switch (event.type) {
       case 'click':
         this.handleClick(event);
@@ -237,10 +246,10 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
         event.stopPropagation();
         break;
       case 'mouseover':
-        this.showIndex();
+        this.handleMouseOver();
         break;
       case 'mouseout':
-        this.hideIndex();
+        this.handleMouseOut();
         break;
     }
   }

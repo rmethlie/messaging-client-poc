@@ -19,6 +19,14 @@
         resize: both;
       }
 
+      .inactive {
+        border: solid transparent 2px;
+      }
+
+      .active {
+        border: solid orange 2px;
+      }
+
       .title {
         margin-left: 5px;
         min-height: 25px;
@@ -84,7 +92,7 @@
       }
 
     </style>
-    <div class="{{activeClass}}" on-click="{{handleMouse}}" on-mouseover="{{handleMouse}}" on-mouseout="{{handleMouse}}">
+    <div class$="{{activeClass}}" on-click="handleMouse" on-mouseover="handleMouse" on-mouseout="handleMouse">
       <div class="title">{{title}}</div>
       <trm-toolbar on-toolbaraction="handleToolClick" on-click="handleToolClick" id="toolbar" data-container-id$="{{id}}">
         <template is="dom-repeat" items="{{tools}}">

@@ -158,7 +158,7 @@ function setLayout(state, action) {
 }
 
 function setActive(state, action) {
-  const id = action.id;
+  const id = action.data.id;
   const container = state.byId[id];
   if (container) {
     return Object.assign({}, state, {active: id});
