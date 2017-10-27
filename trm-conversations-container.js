@@ -15,6 +15,10 @@ class TRMConversationsContainer extends TRMContainer {
       title: {
         type: String,
         value: "Conversations Container val"
+      },
+      id: {
+        type: String,
+        value: () => 'conversations'
       }
     });
   }
@@ -48,7 +52,7 @@ class TRMConversationsContainer extends TRMContainer {
 
   handleToolClick(event) {
     super.handleToolClick(event);
-    const id = this.getAttribute('id');
+    const id = this.id || this.getAttribute('id');
     switch (event.detail.action) {
       case 'ADD_CONTAINER':
         this.dispatch({

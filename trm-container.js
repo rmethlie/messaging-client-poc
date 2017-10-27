@@ -14,7 +14,7 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
       initialized: {
         type: Boolean,
         statePath: function(state) {
-          const id = this.getAttribute('id');
+          const id = this.id || this.getAttribute('id');
           return !!state.containers.byId[id];
         },
         value: false
@@ -22,14 +22,14 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
       activeClass: {
         type: String,
         statePath: function(state) {
-          const id = this.getAttribute('id');
+          const id = this.id || this.getAttribute('id');
           return state.containers.active === id ? 'active' : 'inactive';
         }
       },
       title: {
         type: String,
         statePath: function (state) {
-          const id = this.getAttribute('id');
+          const id = this.id || this.getAttribute('id');
           const containerConfig = state.containers.byId[id];
           if (containerConfig) {
             return containerConfig.title ?
@@ -41,7 +41,7 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
       containers: {
         type: Array,
         statePath: function(state) {
-          const id = this.getAttribute('id');
+          const id = this.id || this.getAttribute('id');
           const containerConfig = state.containers.byId[id];
           if (containerConfig && containerConfig.containers) {
             return containerConfig.containers.length ? [...containerConfig.containers] : false;
@@ -52,7 +52,7 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
       slots: {
         type: Array,
         statePath: function(state) {
-          const id = this.getAttribute('id');
+          const id = this.id || this.getAttribute('id');
           const containerConfig = state.containers.byId[id];
           if (containerConfig && containerConfig.slots) {
             return containerConfig.slots.length ? [...containerConfig.slots] : false;
@@ -67,7 +67,7 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
       slotsClasses: {
         type: String,
         statePath: function(state) {
-          const id = this.getAttribute('id');
+          const id = this.id || this.getAttribute('id');
           const containerConfig = state.containers.byId[id];
           if (containerConfig) {
             const layout = containerConfig.layout;
@@ -82,7 +82,7 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
       containersClasses: {
         type: String,
         statePath: function(state) {
-          const id = this.getAttribute('id');
+          const id = this.id || this.getAttribute('id');
           const containerConfig = state.containers.byId[id];
           if (containerConfig) {
             const layout = containerConfig.layout;
@@ -105,7 +105,7 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
       containerType: {
         type: String,
         statePath: function(state) {
-          const id = this.getAttribute('id');
+          const id = this.id || this.getAttribute('id');
           const containerConfig = state.containers.byId[id];
           if (containerConfig) {
             return containerConfig.type;
@@ -128,7 +128,7 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
   }
 
   handleToolClick(event) {
-    const id = this.getAttribute('id');
+    const id = this.id || this.getAttribute('id');
     switch (event.detail.action) {
       case 'REMOVE_CONTAINER':
         if (this.containerType === 'root') {

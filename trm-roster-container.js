@@ -16,6 +16,10 @@ class TRMRosterContainer extends TRMContainer {
       title: {
         type: String,
         value: "Roster Container val"
+      },
+      id: {
+        type: String,
+        value: 'roster'
       }
     });
   }

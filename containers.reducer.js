@@ -21,13 +21,13 @@ function createContainer(container) {
   }, container);
 }
 
-function getContainer(state, container) {
-  return state.byId[container];
+function getContainer(state, containerId) {
+  return state.byId[containerId];
 }
 
 function addContainer(state, action) {
   // default to root for parent
-  const newContainer = getContainer(state, action.data) || createContainer(action.data);
+  const newContainer = getContainer(state, action.data.id) || createContainer(action.data);
   // cant be your own child
   if (newContainer.id === newContainer.parent) {
     console.warn('Container cannot have same id as parent', newContainer);
