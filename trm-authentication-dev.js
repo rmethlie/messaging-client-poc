@@ -1,5 +1,4 @@
 import { ReduxMixin } from './store.js';
-console.log('test');
 export default class TRMAuthenticationDev extends ReduxMixin(Polymer.Element) {
   static get is() { return 'trm-authentication-dev'; }
   static get properties() {

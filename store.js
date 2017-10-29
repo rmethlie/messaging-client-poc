@@ -1,5 +1,4 @@
 import reducers from './reducers.js';
-// import { initialzeAPI } from './api-managers.js';
 const {
   connection,
   authentication,

@@ -13,10 +13,7 @@ class TRMRosterGroupContainer extends TRMContainer {
   static get properties() {
     const inherited = TRMContainer.properties;
     return Object.assign({}, inherited, {
-      title: {
-        type: String,
-        value: "Roster Group Container"
-      }
+      // add child props here...
     });
   }
 
@@ -27,7 +24,7 @@ class TRMRosterGroupContainer extends TRMContainer {
 
   getTools() {
     return [...super.getTools(),
-      {action: 'ADD_SLOT', label: '+Slot'}
+      {action: 'ADD_ROSTER_SLOT', label: '+Contact'}
     ];
   }
 }

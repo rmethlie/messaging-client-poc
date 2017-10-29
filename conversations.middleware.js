@@ -20,11 +20,12 @@ export default function conversationsMiddleware({ dispatch, getState }) {
             data: action.data
           });
           const activeContainer = getState().containers.active || 'conversations';
+          const id = action.data.jid;
           dispatch({
             type: 'ADD_SLOT',
             data: {
               parent: activeContainer,
-              slot: Object.assign({}, action.data)
+              slot: Object.assign({}, {id})
             }
           });
           break;

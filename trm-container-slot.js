@@ -82,7 +82,6 @@ export default class TRMContainerSlot extends ReduxMixin(Polymer.Element) {
       case 'click':
         this.handleClick(event);
         event.preventDefault();
-        event.stopPropagation();
         break;
       case 'mouseover':
         this.showIndex();

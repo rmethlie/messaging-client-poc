@@ -10,18 +10,17 @@
   <template>
     <style>
       :host {
-        background-color: rgba(50, 50, 50, 0.5);
+        /*background-color: rgba(50, 50, 50, 0.5);*/
         color: white;
         resize: none !important;
-        margin: 0;
         padding: 0;
+        position: absolute;
         max-width: 50%;
         width: 50%;
+        top: 0;
+        bottom: 0;
+        left: 0;
       }
-
-      /*.box {
-        width: 50%;
-      }*/
 
       .title {
         height: 25px;
@@ -29,101 +28,51 @@
         background-color: blue;
       }
 
-      .slots {
-        display: flex;
-        justify-content: start;
-        align-content: stretch;
-        overflow-x: visible;
-      }
-
-      .slots.row.wrap {
-        flex-flow: row wrap;
-      }
-
-      .slots.column {
-        flex-flow: column;
-        overflow-y: auto;
-      }
-
-      .slots.column.wrap {
-        flex-flow: column wrap;
-        overflow-y: auto;
-      }
-
-      .slots.column trm-roster-slot {
-        width: 100%;
-        margin: 5px 0;
-      }
-
-      .slots.column.wrap trm-roster-slot {
-        width: 100%;
-        margin: 5px 0;
-      }
-
-      .slots trm-roster-slot:nth-child(odd) {
-        background-color: rgba(70, 70, 70, 0.5)
-      }
-
-      .slots trm-roster-slot {
-        height: 50px;
-      }
-
-      .slots.column.wrap trm-roster-slot, .slots.column trm-roster-slot {
-        width: 100%;
-      }
-
-      .slots.column.wrap trm-roster-slot:hover, .slots.column trm-roster-slot:hover {
-        width: 150%;
-        background-color: green;
-      }
 
       .containers {
-        display: flex;
+        min-height: 95%;
+        height: 95%;
+        /*display: flex;
         flex-flow: column;
         justify-content: start;
-        align-content: stretch;
+        align-content: stretch;*/
         border: solid #aaa 1px;
         border-radius: 5px;
+        overflow-x: hidden;
+        overflow-y: auto;
       }
 
-      .containers.row {
+      :host > .containers.row {
         flex-flow: row;
       }
 
-      .containers.row.wrap {
+      :host > .containers.row.wrap {
         flex-flow: row wrap;
       }
 
-      .containers.column {
+      :host > .containers.column {
         flex-flow: column;
       }
 
-      .containers.column.wrap {
+      :host > .containers.column.wrap {
         flex-flow: column wrap;
       }
 
-      .containers trm-roster-group-container:nth-child(odd) {
+      :host > .containers trm-roster-group-container:nth-child(odd) {
         background-color: rgba(70, 70, 70, 0.5)
       }
 
     </style>
-    <div class="box">
-      <div class="title">{{title}}</div>
-      <trm-toolbar data-container-id$="{{id}}">
-        <template is="dom-repeat" items="{{tools}}">
-          <tool action$="{{item.action}}" label$="{{item.label}}"></tool>
-        </template>
-      </trm-toolbar>
-      <div class$="{{slotsClasses}}">
-        <template is="dom-repeat" items={{slots}}>
-          <trm-roster-slot data-parent-id="conversations" index$={{index + 1}} id$="{{item}}"></trm-roster-slot></div>
-        </template>
-      </div>
-      <div class$="{{containersClasses}}">
-        <template is="dom-repeat" items={{containers}}>
-          <trm-roster-group-container data-parent-id$="{{id}}" id$="{{item}}"></trm-roster-group-container></div>
-        </template>
-      </div>
+    <div class="title">{{title}}</div>
+    <trm-toolbar data-container-id$="{{id}}">
+      <template is="dom-repeat" items="{{tools}}">
+        <tool action$="{{item.action}}" label$="{{item.label}}"></tool>
+      </template>
+    </trm-toolbar>
+    <div class$="{{containersClasses}}">
+      <template is="dom-repeat" items={{containers}}>
+        <trm-roster-group-container data-parent-id$="{{id}}" id$="{{item}}"></trm-roster-group-container></div>
+      </template>
     </div>
   </template>
 

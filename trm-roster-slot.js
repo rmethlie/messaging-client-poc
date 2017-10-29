@@ -54,7 +54,7 @@ export default class TRMRosterSlot extends TRMContainerSlot {
           if (presenceItem) {
             return `presence ${presenceItem.presence}`;
           }
-          return 'unknown';
+          return 'presence unknown';
         }
       }
     });

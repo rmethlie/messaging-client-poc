@@ -46,8 +46,8 @@ class TRMRosterContainer extends TRMContainer {
 
   getTools() {
     return [...super.getTools(),
-      {action: 'ADD_CONTAINER', label: '+Container'},
-      {action: 'ADD_SLOT', label: '+Slot'}
+      {action: 'ADD_ROSTER_CONTAINER', label: '+Group'},
+      {action: 'ADD_ROSTER_SLOT', label: '+Contact'}
     ];
   }
 }

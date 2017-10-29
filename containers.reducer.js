@@ -17,7 +17,8 @@ function createContainer(container) {
     layout: {
       flow: 'column wrap',
       locked: false
-    }
+    },
+    title: 'Container'
   }, container);
 }
 

@@ -27,7 +27,8 @@ export default class RosterUIManager {
         id: groupId,
         layout: {
           flow: 'row wrap'
-        }
+        },
+        title: groupId
       }
     })
   }
@@ -44,7 +45,6 @@ export default class RosterUIManager {
           }
         }
       });
-      console.log('added', item.jid, 'to', groupId);
     }
     groupIds.forEach(dipatcher.bind(this));
   }
