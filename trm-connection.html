@@ -4,27 +4,7 @@
 <link rel="import" href="./trm-authentication-sso.html">
 <link rel="import" href="../trm-authentication-simple.html">
 <link rel="import" href="../trm-authentication-dev.html">
-<script src="nitro.js"></script>
 
 <dom-module id="trm-connection">
-  <template>
-    <style>
-      :host {}
-    </style>
-    <!-- SSO -->
-    <template is="dom-if" if="{{authTypeSSO}}">
-      <trm-authentication-sso />
-    </template>
-
-    <!-- Simple -->
-    <template is="dom-if" if="{{authTypeSimple}}">
-      <trm-authentication-simple />
-    </template>
-
-    <!-- Dev -->
-    <template is="dom-if" if="{{authTypeDev}}">
-      <trm-authentication-dev />
-    </template>
-  </template>
   <script type="module" src="trm-connection.js"></script>
 </dom-module>

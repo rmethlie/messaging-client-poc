@@ -4,9 +4,9 @@ export default function connectionMiddleware({ dispatch, getState }) {
   return (next) => {
     return (action) => {
       switch (action.type) {
-        case 'CONNECT':
+        case 'API.CONNECTION.CONNECT':
           connectionManager = connectionManager || new Connection({dispatch, getState});
-          connectionManager.connect(action.data);
+          connectionManager.connect(action.data.credentials);
           break;
         default: next(action);
       }
