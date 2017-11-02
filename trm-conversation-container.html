@@ -2,38 +2,42 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
 <link rel="import" href="../trm-toolbar.html">
-<link rel="import" href="../trm-conversation-container.html">
-<link rel="import" href="../trm-container-slot.html">
+<link rel="import" href="../trm-conversation-slot.html">
+<link rel="import" href="../trm-editor.html">
 
-<dom-module id="trm-conversations-container">
+<dom-module id="trm-conversation-container">
   <template>
     <style>
       :host {
+        /* DIFFERENCE FROM PARENT */
+        flex-basis: 20%;
+        flex-flow: column;
+        flex-grow: 1;
+        margin: 5px;
         background-color: rgba(50, 50, 50, 0.5);
         color: white;
-        resize: none !important;
-        margin: 0;
-        padding: 0;
-        position: absolute;
-        max-width: 60%;
-        width: 65%;
-        top: 0;
-        bottom: 0;
-        right: 0;
+        resize: both;
+      }
+
+      .indicator {
+        height:100%;
+        width: 100%;
+        border: solid transparent 2px;
+      }
+
+      .indicator.active {
+        border: solid orange 2px;
       }
 
       .title {
-        height: 25px;
         margin-left: 5px;
-        background-color: blue;
+        min-height: 25px;
       }
 
       .slots {
         display: flex;
         justify-content: start;
         align-content: stretch;
-        height: 50%;
-        overflow-y: scroll;
       }
 
       .slots.row.wrap {
@@ -66,16 +70,8 @@
 
       .containers {
         display: flex;
-        flex-flow: column;
-        /*justify-content: start;
-        align-content: stretch;*/
-        border: solid #aaa 1px;
-        border-radius: 5px;
-
-      }
-
-      .containers.row {
-        flex-flow: row;
+        justify-content: start;
+        align-content: stretch;
       }
 
       .containers.row.wrap {
@@ -84,40 +80,45 @@
 
       .containers.column {
         flex-flow: column;
+        overflow-y: auto;
       }
 
       .containers.column.wrap {
         flex-flow: column wrap;
+        overflow-y: auto;
       }
 
       .containers trm-container:nth-child(odd) {
         background-color: rgba(70, 70, 70, 0.5)
       }
 
-      .containers trm-container#roster {
-        width: 200px;
+      .editor {
+        border:solid #aaa 1px;
       }
 
     </style>
-    <div class="box">
+    <div class$="{{activeClass}}" on-click="handleMouse" on-mouseover="handleMouse" on-mouseout="handleMouse">
       <div class="title">{{title}}</div>
-      <trm-toolbar data-container-id$="{{id}}">
+      <trm-toolbar on-toolbaraction="handleToolClick" on-click="handleToolClick" id="toolbar" data-container-id$="{{id}}">
         <template is="dom-repeat" items="{{tools}}">
           <tool action$="{{item.action}}" label$="{{item.label}}"></tool>
         </template>
       </trm-toolbar>
       <div class$="{{slotsClasses}}">
         <template is="dom-repeat" items={{slots}}>
-          <trm-container-slot data-parent-id="conversations" id$="{{item}}"></trm-container-slot></div>
+          <trm-container-slot data-parent-id$="{{id}}" id="{{item}}" index="{{index}}"></trm-container-slot></div>
         </template>
       </div>
       <div class$="{{containersClasses}}">
         <template is="dom-repeat" items={{containers}}>
-          <trm-conversation-container data-parent-id$="{{id}}" id$="{{item}}"></trm-conversation-container></div>
+          <trm-container data-parent-id$="{{id}}" id="{{item}}" index="{{index}}"></trm-container></div>
         </template>
+      </div>
+      <div class="editor">
+        <trm-editor data-parent-id$="{{id}}" jid="russ3.methlie.thomsonreuters.com@reuasmb.net"></trm-editor>
       </div>
     </div>
   </template>
 
-  <script type="module" src="trm-conversations-container.js"></script>
+  <script type="module" src="trm-conversation-container.js"></script>
 </dom-module>

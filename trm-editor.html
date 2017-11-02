@@ -1,0 +1,31 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<dom-module id="trm-editor">
+  <template>
+    <style>
+      :host {
+        overflow: hidden;
+        margin-top: auto;
+        align-self: flex-end;
+      }
+
+      .border-box {
+        padding: 10px;
+        border: solid #aaa 1px;
+      }
+
+      .editable {
+        height: 100px;
+        width: 100%;
+      }
+
+
+    </style>
+    <div class="border-box">
+      <div class="header">{{title}}</div>
+      <div class="editable" contenteditable="true"></div>
+      <content class="editable-container"></content>
+    </div>
+  </template>
+  <script type="module" src="trm-editor.js"></script>
+</dom-module>

@@ -28,6 +28,7 @@ class TRMConversationsContainer extends TRMContainer {
     this.set('id', 'conversations');
     this.set('title', 'Conversations Container');
     this.containerType = 'root';
+    this.flowIndex = 1;
     this.dispatch({
       type: 'ADD_CONTAINER',
       data: {
