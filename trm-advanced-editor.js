@@ -102,8 +102,8 @@ class TRMAdvancedEditor extends TRMConversationContainer {
   }
 
   addEventListeners() {
-    // this.shadowRoot.querySelector('.sensor')
-    //   .addEventListener('click', this.handleClickOutside.bind(this), true);
+    this.shadowRoot.querySelector('.sensor')
+      .addEventListener('click', this.handleClickOutside.bind(this), true);
     this.addEventListener('keyup', this.handleKeyUp.bind(this));
   }
 

@@ -292,9 +292,13 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
     super.connectedCallback();
 
     setTimeout(() => {
-      this.shadowRoot
-        .querySelector('trm-toolbar')
-        .addEventListener('toolaction', this.handleToolClick.bind(this));
+      const toolbar = this.shadowRoot.querySelector('trm-toolbar');
+      if (toolbar) {
+        toolbar.addEventListener(
+          'toolaction',
+          this.handleToolClick.bind(this)
+        );
+      }
     }, 100);
   }
 

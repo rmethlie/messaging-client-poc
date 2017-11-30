@@ -79,6 +79,7 @@ export default class TRMConversationSlot extends TRMContainerSlot {
   }
 
   ready() {
+    super.ready();
     this.addEventListener('mouseover', this.handleMouse.bind(this));
     this.addEventListener('mouseout', this.handleMouse.bind(this));
     this.addEventListener('click', this.handleMouse.bind(this));
