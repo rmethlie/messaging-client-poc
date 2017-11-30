@@ -10,23 +10,34 @@
     <style>
       :host {
         /* DIFFERENCE FROM PARENT */
-        flex-basis: 20%;
         flex-flow: column;
-        flex-grow: 1;
         margin: 5px;
         background-color: rgba(50, 50, 50, 0.5);
         color: white;
-        resize: both;
+        min-width: 16px;
+        min-height: 16px;
+        flex-grow: 1;
+        overflow: hidden;
+        display: relative;
+        border: dotted transparent 1px;
+        padding: 10px;
+      }
+
+      :host(:hover) {
+        border: dotted orange 1px;
+      }
+
+      :host(.active) {
+        border: solid orange 1px;
       }
 
       .indicator {
-        height:100%;
-        width: 100%;
-        border: solid transparent 2px;
+        border: solid transparent 1px;
+        position: relative;
       }
 
       .indicator.active {
-        border: solid orange 2px;
+        border: solid orange 1px;
       }
 
       .title {
@@ -38,85 +49,81 @@
         display: flex;
         justify-content: start;
         align-content: stretch;
+        height: calc(100% - 150px);
+        max-height: 500px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin: 10px 0;
       }
 
       .slots.row.wrap {
         flex-flow: row wrap;
       }
 
+      .slots.row.wrap trm-conversation-slot {
+        border-width: 0 0 1px 1px;
+        border-style: solid;
+        border-color: transparent transparent #333 #777;
+      }
+
+      .slots.row.wrap trm-conversation-slot trm-toolbar {
+        display: none;
+      }
+
       .slots.column {
         flex-flow: column;
-        overflow-y: auto;
       }
 
       .slots.column.wrap {
-        flex-flow: column wrap;
-        overflow-y: auto;
-      }
-
-      .slots.column trm-container-slot {
-        width: 100%;
-        margin: 5px 0;
-      }
-
-      .slots.column.wrap trm-container-slot {
-        width: 100%;
-        margin: 5px 0;
-      }
-
-      .slots trm-container:nth-child(odd) {
-        background-color: rgba(70, 70, 70, 0.5)
-      }
-
-      .containers {
-        display: flex;
-        justify-content: start;
-        align-content: stretch;
-      }
-
-      .containers.row.wrap {
-        flex-flow: row wrap;
-      }
-
-      .containers.column {
+        /* dont use wrap here */
         flex-flow: column;
-        overflow-y: auto;
       }
 
-      .containers.column.wrap {
-        flex-flow: column wrap;
-        overflow-y: auto;
+      .slots.column trm-conversation-slot {
+        width: 100%;
+        margin: 5px 0;
       }
 
-      .containers trm-container:nth-child(odd) {
+      .slots.column.wrap trm-conversation-slot {
+        width: 100%;
+        margin: 5px 0;
+      }
+
+      .slots trm-conversation-slot:nth-child(odd) {
         background-color: rgba(70, 70, 70, 0.5)
       }
 
       .editor {
-        border:solid #aaa 1px;
+        border: solid #aaa 1px;
+        min-height: 2em;
       }
 
+      .slots::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(150,150,150,.5);
+        -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+      }
+
+      .slots::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 8px;
+      }
+
+
     </style>
-    <div class$="{{activeClass}}" on-click="handleMouse" on-mouseover="handleMouse" on-mouseout="handleMouse">
-      <div class="title">{{title}}</div>
-      <trm-toolbar on-toolbaraction="handleToolClick" on-click="handleToolClick" id="toolbar" data-container-id$="{{id}}">
-        <template is="dom-repeat" items="{{tools}}">
-          <tool action$="{{item.action}}" label$="{{item.label}}"></tool>
-        </template>
-      </trm-toolbar>
-      <div class$="{{slotsClasses}}">
-        <template is="dom-repeat" items={{slots}}>
-          <trm-container-slot data-parent-id$="{{id}}" id="{{item}}" index="{{index}}"></trm-container-slot></div>
-        </template>
-      </div>
-      <div class$="{{containersClasses}}">
-        <template is="dom-repeat" items={{containers}}>
-          <trm-container data-parent-id$="{{id}}" id="{{item}}" index="{{index}}"></trm-container></div>
-        </template>
-      </div>
-      <div class="editor">
-        <trm-editor data-parent-id$="{{id}}" jid="russ3.methlie.thomsonreuters.com@reuasmb.net"></trm-editor>
-      </div>
+    <div class="title">{{title}}</div>
+    <trm-toolbar on-toolbaraction="handleToolClick" on-click="handleToolClick" id="toolbar" data-container-id$="{{id}}">
+      <template is="dom-repeat" items="{{tools}}">
+        <tool action$="{{item.action}}" label$="{{item.label}}"></tool>
+      </template>
+    </trm-toolbar>
+    <div class$="{{slotsClasses}}">
+      <template is="dom-repeat" items={{slots}}>
+        <trm-conversation-slot data-parent-id$="{{id}}" id="{{item}}" index="{{index}}"></trm-conversation-slot>
+      </template>
+    </div>
+    <div class="editor">
+      <trm-editor data-parent-id$="{{id}}"></trm-editor>
     </div>
   </template>
 

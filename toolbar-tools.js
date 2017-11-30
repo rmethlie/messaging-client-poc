@@ -27,7 +27,7 @@ function CycleLayout({ container, layouts, dispatch }) {
   function handler() {
     const nextFlow = getNextFlow();
     dispatch({
-      type: 'SET_LAYOUT',
+      type: 'CONTAINERS.SET_LAYOUT',
       data: {id, flow: nextFlow.value}
     });
   }

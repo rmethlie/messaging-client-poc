@@ -27,6 +27,10 @@ class TRMRosterGroupContainer extends TRMContainer {
       {action: 'ADD_ROSTER_SLOT', label: '+Contact'}
     ];
   }
+
+  handleClick() {
+    // do nothing
+  }
 }
 
 window.customElements.define(TRMRosterGroupContainer.is, TRMRosterGroupContainer);

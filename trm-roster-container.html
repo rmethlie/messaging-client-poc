@@ -14,8 +14,7 @@
         resize: none !important;
         padding: 0;
         position: absolute;
-        max-width: 40%;
-        width: 40%;
+        min-width: 250px;
         top: 0;
         bottom: 0;
         left: 0;
@@ -70,7 +69,7 @@
     </trm-toolbar>
     <div class$="{{containersClasses}}">
       <template is="dom-repeat" items={{containers}}>
-        <trm-roster-group-container data-parent-id$="{{id}}" id$="{{item}}"></trm-roster-group-container></div>
+        <trm-roster-group-container data-parent-id$="{{id}}" id$="{{item}}"></trm-roster-group-container>
       </template>
     </div>
   </template>

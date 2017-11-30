@@ -3,13 +3,17 @@ const {
   connection,
   authentication,
   containers,
+  containersMiddleware,
   roster,
   rosterMiddleware,
   connectionMiddleware,
   authenticationMiddleware,
   presence,
   conversations,
-  conversationsMiddleware
+  conversationsMiddleware,
+  editor,
+  editorMiddleware,
+  ui
 } = reducers;
 const {
   createStore,
@@ -22,7 +26,9 @@ const combinedReducers =
     containers,
     roster,
     presence,
-    conversations
+    conversations,
+    editor,
+    ui
   });
 const composeEnhancers =
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || Redux.compose
@@ -31,7 +37,9 @@ export const store = createStore(combinedReducers, composeEnhancers(
     connectionMiddleware,
     authenticationMiddleware,
     rosterMiddleware,
-    conversationsMiddleware
+    conversationsMiddleware,
+    containersMiddleware,
+    editorMiddleware
   )
 ));
 

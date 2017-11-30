@@ -6,18 +6,24 @@ export const defaultContainersState = {
 const generateContainerId =
   () => `${Math.floor(Math.random() * (1000000 - 1) + 1)}`;
 
+export const defaultContainerState = {
+  id: null,
+  type: 'container',
+  slots: [],
+  containers: [],
+  peristent: false,
+  layout: {
+    flow: 'column wrap',
+    locked: false,
+    containerSize: 0,
+    slotSize: 0
+  }
+}
+
+
 function createContainer(container) {
-  const id = container.id || generateContainerId();
-  return Object.assign({}, {
-    id,
-    type: 'container',
-    slots: [],
-    containers: [],
-    peristent: false,
-    layout: {
-      flow: 'column wrap',
-      locked: false
-    },
+  return Object.assign({}, defaultContainerState, {
+    id: generateContainerId(),
     title: 'Container'
   }, container);
 }
@@ -178,7 +184,7 @@ export default function containers(state = defaultContainersState, action = {}) 
       return addSlot(state, action);
     case 'REMOVE_SLOT':
       return removeSlot(state, action);
-    case 'SET_LAYOUT':
+    case 'CONTAINERS.SET_LAYOUT':
       return setLayout(state, action);
     case 'SET_ACTIVE':
       return setActive(state, action);

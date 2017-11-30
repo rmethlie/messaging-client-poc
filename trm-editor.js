@@ -14,23 +14,6 @@ class TRMEditor extends ReduxMixin(Polymer.Element) {
   static get is() { return 'trm-editor'; }
   static get properties() {
     return {
-      title: {
-        type: String,
-        statePath: function(state) {
-          const jid = this.get('jid');
-          if (!jid) {
-            return 'WARN: Unconfigured Editor!!'
-          }
-          const contact = state.roster.byId[jid];
-          if (!contact) {
-            return jid;
-          }
-          return contact.name;
-        }
-      },
-      jid: {
-        type: String
-      },
       'data-parent-id': {
         type: String
       },
@@ -54,18 +37,26 @@ class TRMEditor extends ReduxMixin(Polymer.Element) {
     if (this.editor.childNodes.length) {
       const selection = this.shadowRoot.getSelection();
       selection.removeAllRanges();
-      selection.addRange(this._range);
+      if (this._range) {
+        selection.addRange(this._range);
+      }
     }
   }
 
   storeRange() {
     const selection = this.shadowRoot.getSelection();
-    this._range = selection.getRangeAt(0);
+    if (selection.rangeCount) {
+      this._range = selection.getRangeAt(0);
+    }
+    this._range = null;
   }
 
   focus() {
-    this.restoreRange();
-    this.editor.focus();
+    const focusedEditor = this.shadowRoot.querySelector('.editable:focus')
+    if (!focusedEditor) {
+      this.restoreRange();
+      this.editor.focus();
+    }
   }
 
   handleKeyUp(event) {
@@ -75,9 +66,6 @@ class TRMEditor extends ReduxMixin(Polymer.Element) {
         console.log('value', this.editor.value);
         console.log('innerHTML', this.editor.innerHTML);
       break;
-
-      default:
-        console.log(event.key);
     }
   }
 
@@ -86,6 +74,15 @@ class TRMEditor extends ReduxMixin(Polymer.Element) {
   // includes cursor position.
   handleFocusOut() {
     this.storeRange();
+  }
+
+  handleDoubleClick() {
+    const id = this.getAttribute('data-parent-id');
+    console.log('double click', id);
+    this.dispatch({
+      type: 'API.EDITOR.SHOW',
+      data: {id}
+    });
   }
 
   initContentEditable() {
@@ -97,7 +94,8 @@ class TRMEditor extends ReduxMixin(Polymer.Element) {
   addEventListeners() {
     this.editor.addEventListener('keyup', this.handleKeyUp.bind(this));
     this.editor.addEventListener('focusout', this.handleFocusOut.bind(this));
-    this.editor.addEventListener('focus', this.handleFocus.bind(this));
+    this.editor.addEventListener('dblclick', this.handleDoubleClick.bind(this));
+    // this.editor.addEventListener('focus', this.handleFocus.bind(this));
   }
 
   connectedCallback() {

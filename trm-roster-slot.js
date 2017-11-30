@@ -45,27 +45,16 @@ export default class TRMRosterSlot extends TRMContainerSlot {
           }
           return classList.join(' ');
         }
-      },
-
-      presenceClasses: {
-        type: String,
-        statePath: function(state) {
-          const presenceItem = state.presence[this.id];
-          if (presenceItem) {
-            return `presence ${presenceItem.presence}`;
-          }
-          return 'presence unknown';
-        }
       }
     });
   }
 
   showIndex() {
-    this.shadowRoot.querySelector('.index').classList = ['index visible'];
+    // no index
   }
 
   hideIndex() {
-    this.shadowRoot.querySelector('.index').classList = ['index'];
+    // no index
   }
 
   handleClick(event) {

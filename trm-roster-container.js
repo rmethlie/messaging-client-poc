@@ -20,6 +20,14 @@ class TRMRosterContainer extends TRMContainer {
       id: {
         type: String,
         value: 'roster'
+      },
+
+      style: {
+        type: String,
+        statePath: function(state) {
+          const rosterWidth = state.ui.rosterWidth;
+          return `width: ${rosterWidth}px;`;
+        }
       }
     });
   }
@@ -38,7 +46,8 @@ class TRMRosterContainer extends TRMContainer {
         type: 'root',
         layout: {
           flow: 'column wrap',
-          locked: true
+          locked: true,
+          containerSize: 0
         }
       }
     });
@@ -49,6 +58,14 @@ class TRMRosterContainer extends TRMContainer {
       {action: 'ADD_ROSTER_CONTAINER', label: '+Group'},
       {action: 'ADD_ROSTER_SLOT', label: '+Contact'}
     ];
+  }
+
+  updateSlotSize(slotSize) {
+    // do nothing
+  }
+
+  handleClick() {
+    // do nothing
   }
 }
 

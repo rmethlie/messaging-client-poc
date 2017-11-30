@@ -4,6 +4,7 @@
 <link rel="import" href="../trm-toolbar.html">
 <link rel="import" href="../trm-conversation-container.html">
 <link rel="import" href="../trm-container-slot.html">
+<link rel="import" href="../trm-advanced-editor.html">
 
 <dom-module id="trm-conversations-container">
   <template>
@@ -15,8 +16,7 @@
         margin: 0;
         padding: 0;
         position: absolute;
-        max-width: 60%;
-        width: 65%;
+        min-width: 50%;
         top: 0;
         bottom: 0;
         right: 0;
@@ -42,12 +42,10 @@
 
       .slots.column {
         flex-flow: column;
-        overflow-y: auto;
       }
 
       .slots.column.wrap {
         flex-flow: column wrap;
-        overflow-y: auto;
       }
 
       .slots.column trm-container-slot {
@@ -67,8 +65,8 @@
       .containers {
         display: flex;
         flex-flow: column;
-        /*justify-content: start;
-        align-content: stretch;*/
+        justify-content: start;
+        align-content: stretch;
         border: solid #aaa 1px;
         border-radius: 5px;
 
@@ -90,12 +88,25 @@
         flex-flow: column wrap;
       }
 
-      .containers trm-container:nth-child(odd) {
+      .containers trm-conversation-container:nth-child(odd) {
         background-color: rgba(70, 70, 70, 0.5)
       }
 
       .containers trm-container#roster {
-        width: 200px;
+      .containers.small trm-conversation-container {
+        flex-basis: 15%;
+      }
+
+      .containers.medium trm-conversation-container {
+        flex-basis: 24%;
+      }
+
+      .containers.large trm-conversation-container {
+        flex-basis: 45%;
+      }
+
+      .containers.x-large trm-conversation-container {
+        flex-basis: 100%;
       }
 
     </style>
@@ -111,12 +122,13 @@
           <trm-container-slot data-parent-id="conversations" id$="{{item}}"></trm-container-slot></div>
         </template>
       </div>
-      <div class$="{{containersClasses}}">
+      <div class$="{{containersClasses}}" style="{{containersStyles}}">
         <template is="dom-repeat" items={{containers}}>
           <trm-conversation-container data-parent-id$="{{id}}" id$="{{item}}"></trm-conversation-container></div>
         </template>
       </div>
     </div>
+    <trm-advanced-editor></trm-advanced-editor>
   </template>
 
   <script type="module" src="trm-conversations-container.js"></script>

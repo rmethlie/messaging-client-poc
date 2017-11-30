@@ -7,25 +7,25 @@
         overflow: hidden;
         margin-top: auto;
         align-self: flex-end;
-      }
-
-      .border-box {
         padding: 10px;
-        border: solid #aaa 1px;
       }
 
       .editable {
-        height: 100px;
-        width: 100%;
+        background-color: rgb(53, 50, 45);
+        border-color: orange;
+        font-size: 12px;
+        min-height: 2.3em;
+        margin: 0 10px;
+        height: 100%;
+        padding: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
-
     </style>
-    <div class="border-box">
-      <div class="header">{{title}}</div>
-      <div class="editable" contenteditable="true"></div>
-      <content class="editable-container"></content>
-    </div>
+    <div class="header">{{title}}</div>
+    <div class="editable" contenteditable="true"></div>
+    <content class="editable-container"></content>
   </template>
   <script type="module" src="trm-editor.js"></script>
 </dom-module>

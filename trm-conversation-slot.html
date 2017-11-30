@@ -2,6 +2,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../trm-toolbar.html">
+<link rel="import" href="../trm-presence.html">
 
 <dom-module id="trm-conversation-slot">
   <template>
@@ -9,22 +10,28 @@
       :host {
         position: relative;
         display: block;
+        min-height: 25px;
+        min-width: 50px;
+
         margin: 5px;
-        background-color: rgba(50, 50, 50, 0.8);
+        padding: 3px;
+
         color: white;
-        resize: both;
-        height: 15%;
-        width: 15%;
+        cursor: pointer;
       }
 
       .header {
         width: 100%;
+        height: 25px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
 
       .title {
         margin-left: 5px;
         min-height: 25px;
         min-width: 100%;
+        font-size: 12px;
       }
       .index {
         display: none;
@@ -33,14 +40,14 @@
         right: 0;
         bottom: 0;
         left: 0;
-        background-color: rgba(100, 100, 100, 0.5);
-        font-size:22pt;
+        font-size:12px;
         color: white;
         text-align: center;
       }
 
       .index.visible {
         display: block;
+        background-color: rgba(100, 100, 100, 0.5);
       }
 
       .index:hover {
@@ -50,15 +57,14 @@
       .column.wrap :host, .column :host {
         width: 100%;
       }
+
     </style>
-    <div class="sensor" on-click="{{handleMouse}}" on-mouseover="{{handleMouse}}" on-mouseout="{{handleMouse}}">
-      <div class="header">
-        <trm-toolbar data-container-id$="{{id}}"></trm-toolbar>
-        <span class="title">{{content.title}}</span>
-      </div>
-      <div class$="{{slotClasses}}"></div>
-      <div class="index">{{index}}</div>
+    <div class="header">
+      <trm-toolbar style="{{toolbarStyle}}" data-container-id$="{{id}}"></trm-toolbar>
+      <trm-presence jid$="{{id}}"></trm-presence>
+      <span class="title">{{title}}</span>
     </div>
+    <div class="index">{{index}}</div>
   </template>
 
   <script type="module" src="trm-conversation-slot.js"></script>

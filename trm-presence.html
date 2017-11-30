@@ -1,0 +1,34 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<dom-module id="trm-presence">
+  <template>
+    <style>
+      :host {
+      }
+
+      .presence {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        background-color: rgba(100, 100, 100, 0.5);
+      }
+
+      .presence.unavailable {
+        background-color: rgba(100, 100, 100, 0.5);
+      }
+      .presence.available {
+        background-color: rgba(50, 175, 75, 0.5);
+      }
+      .presence.busy {
+        background-color: rgba(200, 25, 25, 0.5);
+      }
+      .presence.away {
+        background-color: rgba(200, 175, 75, 0.5);
+      }
+
+    </style>
+    <div class$="{{presenceClasses}}"></div>
+  </template>
+  <script type="module" src="trm-presence.js"></script>
+</dom-module>

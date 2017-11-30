@@ -7,6 +7,7 @@
  * @trm3 index.html
  */
 import { ReduxMixin } from './store.js';
+import { defaultContainerState } from './containers.reducer.js';
 export default class TRMContainerSlot extends ReduxMixin(Polymer.Element) {
   static get is() { return 'trm-container-slot'; }
   static get properties() {
@@ -102,6 +103,27 @@ export default class TRMContainerSlot extends ReduxMixin(Polymer.Element) {
   getTools() {
     return [];
   }
+
+  getParentConfig(id, state) {
+    const currentState = state || this.getState();
+    const parentConfigId = id || this.getAttribute('data-parent-id');
+    const parentConfig = currentState.containers.byId[parentConfigId];
+    if (parentConfig) {
+      return parentConfig;
+    }
+    return Object.assign({}, defaultContainerState, {id: parentConfigId});
+  }
+
+  getConfig(id, state) {
+    const currentState = state || this.getState();
+    const configId = id || this.id || this.getAttribute('id');
+    const config = currentState.containers.byId[configId];
+    if (config) {
+      return config;
+    }
+    return Object.assign({}, defaultContainerState, {id: configId});
+  }
+
 
 }
 

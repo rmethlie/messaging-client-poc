@@ -15,23 +15,73 @@ export default class TRMConversationSlot extends TRMContainerSlot {
       title: {
         type: String,
         statePath: function(state) {
-          const jid = this.get('jid');
-          if (!jid) {
+          const id = this.get('id');
+          if (!id) {
             return 'WARN: Unconfigured Editor!!'
           }
-          const contact = state.roster.byId[jid];
+          const contact = state.roster.byId[id];
           if (!contact) {
-            return jid;
+            return id;
+          }
+          const parentContainerId = this.getAttribute('data-parent-id');
+          const parentContainer = state.containers.byId[parentContainerId];
+          if (parentContainer && parentContainer.layout.flow === 'row wrap') {
+            return this.getCompactName(contact.name);
           }
           return contact.name;
+        }
+      },
+
+      presenceClasses: {
+        type: String,
+        statePath: function(state) {
+          const presenceItem = state.presence[this.get('id')];
+          if (presenceItem) {
+            return `presence ${presenceItem.presence}`;
+          }
+          return 'presence unknown';
+        }
+      },
+
+      toolbarStyle: {
+        type: String,
+        statePath: function(state) {
+          const { layout } = this.getParentConfig();
+          if (layout.flow === 'row wrap'){
+            return 'display: none';
+          }
+          return '';
+        }
+      },
+
+      indexStyle: {
+        type: String,
+        statePath: function(state) {
+          const { layout } = this.getParentConfig();
+          if (layout.flow === 'row wrap'){
+            return 'display: none';
+          }
+          return '';
         }
       }
     });
   }
 
+  getCompactName(name) {
+    const parts = name.split(' ');
+    return parts.map(part => part.substr(0,1).toUpperCase()).join(' ');
+  }
+
   constructor() {
     super();
+    window.containers.push(this);
     this.handleMouse = this.handleMouse.bind(this);
+  }
+
+  ready() {
+    this.addEventListener('mouseover', this.handleMouse.bind(this));
+    this.addEventListener('mouseout', this.handleMouse.bind(this));
+    this.addEventListener('click', this.handleMouse.bind(this));
   }
 
   showIndex() {
@@ -43,7 +93,11 @@ export default class TRMConversationSlot extends TRMContainerSlot {
   }
 
   handleClick(event) {
-    console.log('click');
+    const id = this.get('id');
+    this.dispatch({
+      type: 'API.EDITOR.SHOW',
+      data: {id}
+    })
   }
 }
 

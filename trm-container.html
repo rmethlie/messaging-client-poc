@@ -16,16 +16,13 @@
         background-color: rgba(50, 50, 50, 0.5);
         color: white;
         resize: both;
+        overflow: hidden;
+        border: dotted transparent 1px;
+        padding: 10px;
       }
 
-      .indicator {
-        height:100%;
-        width: 100%;
-        border: solid transparent 2px;
-      }
-
-      .indicator.active {
-        border: solid orange 2px;
+      :host(:hover) {
+        border: dotted orange 1px;
       }
 
       .title {
@@ -46,12 +43,10 @@
 
       .slots.column {
         flex-flow: column;
-        overflow-y: auto;
       }
 
       .slots.column.wrap {
         flex-flow: column wrap;
-        overflow-y: auto;
       }
 
       .slots.column trm-container-slot {
@@ -80,12 +75,10 @@
 
       .containers.column {
         flex-flow: column;
-        overflow-y: auto;
       }
 
       .containers.column.wrap {
         flex-flow: column wrap;
-        overflow-y: auto;
       }
 
       .containers trm-container:nth-child(odd) {
@@ -93,23 +86,21 @@
       }
 
     </style>
-    <div class$="{{activeClass}}" on-click="handleMouse" on-mouseover="handleMouse" on-mouseout="handleMouse">
-      <div class="title">{{title}}</div>
-      <trm-toolbar on-toolbaraction="handleToolClick" on-click="handleToolClick" id="toolbar" data-container-id$="{{id}}">
-        <template is="dom-repeat" items="{{tools}}">
-          <tool action$="{{item.action}}" label$="{{item.label}}"></tool>
-        </template>
-      </trm-toolbar>
-      <div class$="{{slotsClasses}}">
-        <template is="dom-repeat" items={{slots}}>
-          <trm-container-slot data-parent-id$="{{id}}" id="{{item}}" index="{{index}}"></trm-container-slot></div>
-        </template>
-      </div>
-      <div class$="{{containersClasses}}">
-        <template is="dom-repeat" items={{containers}}>
-          <trm-container data-parent-id$="{{id}}" id="{{item}}" index="{{index}}"></trm-container></div>
-        </template>
-      </div>
+    <div class="title">{{title}}</div>
+    <trm-toolbar on-toolbaraction="handleToolClick" on-click="handleToolClick" id="toolbar" data-container-id$="{{id}}">
+      <template is="dom-repeat" items="{{tools}}">
+        <tool action$="{{item.action}}" label$="{{item.label}}"></tool>
+      </template>
+    </trm-toolbar>
+    <div class$="{{slotsClasses}}">
+      <template is="dom-repeat" items={{slots}}>
+        <trm-container-slot data-parent-id$="{{id}}" id="{{item}}" index="{{index}}"></trm-container-slot>
+      </template>
+    </div>
+    <div class$="{{containersClasses}}">
+      <template is="dom-repeat" items={{containers}}>
+        <trm-container data-parent-id$="{{id}}" id="{{item}}" index="{{index}}"></trm-container>
+      </template>
     </div>
   </template>
 

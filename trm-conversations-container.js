@@ -19,6 +19,16 @@ class TRMConversationsContainer extends TRMContainer {
       id: {
         type: String,
         value: () => 'conversations'
+      },
+
+      style: {
+        type: String,
+        statePath: function(state) {
+          const rosterWidth = state.ui.rosterWidth;
+          const splitterWidth = 7;
+          // for now they are siblings and push each other around
+          return `left: ${rosterWidth + splitterWidth}px;`;
+        }
       }
     });
   }
@@ -38,7 +48,9 @@ class TRMConversationsContainer extends TRMContainer {
         type: 'root',
         layout: {
           flow: 'row wrap',
-          locked: true
+          locked: true,
+          containerSize: 0,
+          slotSize: 1
         }
       }
     });
@@ -47,7 +59,9 @@ class TRMConversationsContainer extends TRMContainer {
   getTools() {
     return [...super.getTools(),
       {action: 'ADD_CONTAINER', label: '+Container'},
-      {action: 'ADD_SLOT', label: '+Slot'}
+      {action: 'ADD_SLOT', label: '+Slot'},
+      {action: 'INCREASE_CONTAINER_SIZE', label: `${String.fromCharCode(8593)} Container Size`},
+      {action: 'DECREASE_CONTAINER_SIZE', label: `${String.fromCharCode(8595)} Container Size`}
     ];
   }
 
@@ -62,6 +76,10 @@ class TRMConversationsContainer extends TRMContainer {
         })
       break;
     }
+  }
+
+  handleClick() {
+    // do nothing
   }
 }
 

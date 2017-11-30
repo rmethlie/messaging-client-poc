@@ -1,0 +1,211 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../trm-toolbar.html">
+<link rel="import" href="../trm-conversation-slot.html">
+<link rel="import" href="../trm-editor.html">
+
+<dom-module id="trm-advanced-editor">
+  <template>
+    <style>
+      :host {
+        display: none;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        padding: 100px;
+
+        /* DIFFERENCE FROM PARENT */
+        flex-flow: column;
+        background-color: rgba(10, 10, 10, 0.75);
+        color: white;
+        overflow: hidden;
+      }
+
+      :host(.active) {
+        display: block;
+      }
+
+      .indicator {
+        border: solid orange 2px;
+        background-color: rgb(50, 50, 50);
+        padding: 15px;
+        position: relative;
+        height: 100%;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(50,50,50,.5);
+        -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+      }
+
+      ::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 8px;
+      }
+
+      .sensor {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        cursor: pointer;
+      }
+
+      .history {
+        height: 50%;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .title {
+        margin-left: 5px;
+        min-height: 25px;
+      }
+
+      .slots {
+        display: flex;
+        height: 100px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        justify-content: start;
+        align-content: stretch;
+        margin-bottom: 100px;
+      }
+
+      .slots.row.wrap {
+        flex-flow: row wrap;
+      }
+
+      .slots.row.wrap trm-conversation-slot {
+        border-width: 0 0 1px 1px;
+        border-style: solid;
+        border-color: transparent transparent #333 #777;
+      }
+
+      .slots.row.wrap trm-conversation-slot trm-toolbar {
+        display: none;
+      }
+
+      .slots.column {
+        flex-flow: column;
+      }
+
+      .slots.column.wrap {
+        flex-flow: column wrap;
+      }
+
+      .slots.column trm-conversation-slot {
+        width: 100%;
+        margin: 5px 0;
+      }
+
+      .slots.column.wrap trm-conversation-slot {
+        width: 100%;
+        margin: 5px 0;
+      }
+
+      .slots trm-conversation-slot:nth-child(odd) {
+        background-color: rgba(70, 70, 70, 0.5)
+      }
+
+      .editor {
+        height: 150px;
+        border: solid #aaa 1px;
+        padding-bottom: 60px;
+      }
+
+    </style>
+    <div class="sensor"></div>
+    <div class="indicator">
+      <div>
+        <span class="card"></span>
+        <span class="title">{{title}}</span>
+      </div>
+      <trm-toolbar on-toolbaraction="handleToolClick" on-click="handleToolClick" id="toolbar" data-container-id$="{{id}}">
+        <template is="dom-repeat" items="{{tools}}">
+          <tool action$="{{item.action}}" label$="{{item.label}}"></tool>
+        </template>
+      </trm-toolbar>
+      <div class$="{{slotsClasses}}">
+        <template is="dom-repeat" items={{slots}}>
+          <trm-conversation-slot data-parent-id$="{{id}}" id="{{item}}" index="{{index}}"></trm-conversation-slot>
+        </template>
+      </div>
+      <div class="history">
+        <div>Message 1</div>
+        <div>Message 2</div>
+        <div>Message 3</div>
+        <div>Message 4</div>
+        <div>Message 5</div>
+        <div>Message 6</div>
+        <div>Message 7</div>
+        <div>Message 8</div>
+        <div>Message 9</div>
+        <div>Message 10</div>
+        <div>Message 1</div>
+        <div>Message 2</div>
+        <div>Message 3</div>
+        <div>Message 4</div>
+        <div>Message 5</div>
+        <div>Message 6</div>
+        <div>Message 7</div>
+        <div>Message 8</div>
+        <div>Message 9</div>
+        <div>Message 10</div>
+        <div>Message 1</div>
+        <div>Message 2</div>
+        <div>Message 3</div>
+        <div>Message 4</div>
+        <div>Message 5</div>
+        <div>Message 6</div>
+        <div>Message 7</div>
+        <div>Message 8</div>
+        <div>Message 9</div>
+        <div>Message 10</div>
+        <div>Message 1</div>
+        <div>Message 2</div>
+        <div>Message 3</div>
+        <div>Message 4</div>
+        <div>Message 5</div>
+        <div>Message 6</div>
+        <div>Message 7</div>
+        <div>Message 8</div>
+        <div>Message 9</div>
+        <div>Message 10</div>
+        <div>Message 1</div>
+        <div>Message 2</div>
+        <div>Message 3</div>
+        <div>Message 4</div>
+        <div>Message 5</div>
+        <div>Message 6</div>
+        <div>Message 7</div>
+        <div>Message 8</div>
+        <div>Message 9</div>
+        <div>Message 10</div>
+        <div>Message 1</div>
+        <div>Message 2</div>
+        <div>Message 3</div>
+        <div>Message 4</div>
+        <div>Message 5</div>
+        <div>Message 6</div>
+        <div>Message 7</div>
+        <div>Message 8</div>
+        <div>Message 9</div>
+        <div>Message 10</div>
+      </div>
+      <div class="editor">
+        <trm-editor data-parent-id$="{{jid}}"></trm-editor>
+        <div>
+
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script type="module" src="trm-advanced-editor.js"></script>
+</dom-module>
