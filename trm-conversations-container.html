@@ -92,7 +92,6 @@
         background-color: rgba(70, 70, 70, 0.5)
       }
 
-      .containers trm-container#roster {
       .containers.small trm-conversation-container {
         flex-basis: 15%;
       }
@@ -119,12 +118,12 @@
       </trm-toolbar>
       <div class$="{{slotsClasses}}">
         <template is="dom-repeat" items={{slots}}>
-          <trm-container-slot data-parent-id="conversations" id$="{{item}}"></trm-container-slot></div>
+          <trm-container-slot data-parent-id="conversations" id$="{{item}}"></trm-container-slot>
         </template>
       </div>
       <div class$="{{containersClasses}}" style="{{containersStyles}}">
         <template is="dom-repeat" items={{containers}}>
-          <trm-conversation-container data-parent-id$="{{id}}" id$="{{item}}"></trm-conversation-container></div>
+          <trm-conversation-container data-parent-id$="{{id}}" id$="{{item}}"></trm-conversation-container>
         </template>
       </div>
     </div>
