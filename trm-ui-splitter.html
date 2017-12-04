@@ -11,10 +11,35 @@
         bottom: 0;
         left: 0;
         width: 5px;
-        background-color: #aaa;
+        background-color: #444;
         cursor: ew-resize;
+        user-select: none;
       }
+
+      .handle {
+        position: absolute;
+        top: 50%;
+        background-color: #444;
+        padding: 2px;
+        width: 7px;
+        height: 20px;
+        z-index: 1;
+      }
+
+      .handle.grow {
+        left: 0;
+        border-radius: 0 4px 4px 0;
+        cursor: e-resize;
+      }
+
+      .handle.shrink {
+        left: -8px;
+        border-radius: 4px 0 0 4px;
+        cursor: w-resize;
+      }
+
     </style>
+    <div class$="handle {{handleClasses}}">{{handleDirection}}</div>
   </template>
 
   <script type="module" src="trm-ui-splitter.js"></script>

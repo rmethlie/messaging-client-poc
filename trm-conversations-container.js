@@ -65,19 +65,6 @@ class TRMConversationsContainer extends TRMContainer {
     ];
   }
 
-  handleToolClick(event) {
-    super.handleToolClick(event);
-    const id = this.id || this.getAttribute('id');
-    switch (event.detail.action) {
-      case 'ADD_CONTAINER':
-        this.dispatch({
-          type: 'SET_ACTIVE',
-          data: {id, active: true}
-        })
-      break;
-    }
-  }
-
   handleClick() {
     // do nothing
   }

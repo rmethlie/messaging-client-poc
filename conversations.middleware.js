@@ -28,6 +28,10 @@ export default function conversationsMiddleware({ dispatch, getState }) {
               slot: Object.assign({}, {id})
             }
           });
+          dispatch({
+            type: 'SET_ACTIVE',
+            data: {id: activeContainer.id}
+          })
           break;
         case 'API.CONVERSATIONS.CLOSE':
           next({

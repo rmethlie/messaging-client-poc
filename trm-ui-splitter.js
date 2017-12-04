@@ -18,6 +18,35 @@ class TRMUISplitter extends ReduxMixin(Polymer.Element) {
           const rosterWidth = state.ui.rosterWidth;
           return `left: ${rosterWidth}px`;
         }
+      },
+
+      handleDirection: {
+        type: String,
+        statePath: function(state) {
+          const currentRosterWidth = this.getState().ui.rosterWidth;
+          const defaultRosterWidth = defaultUIState.rosterWidth;
+          if (currentRosterWidth > defaultRosterWidth) {
+            return '❬❬'
+          } else {
+            return '❭❭'
+          }
+        }
+      },
+
+      handleClasses: {
+        type: String,
+        statePath: function(state) {
+          const classes = ['handle'];
+          const currentRosterWidth = this.getState().ui.rosterWidth;
+          const defaultRosterWidth = defaultUIState.rosterWidth;
+          if (currentRosterWidth > defaultRosterWidth) {
+            classes.push('shrink');
+          } else {
+            classes.push('grow');
+          }
+
+          return classes.join(' ');
+        }
       }
     }
   }
@@ -31,8 +60,28 @@ class TRMUISplitter extends ReduxMixin(Polymer.Element) {
 
   getNewWidth(mouseX) {
     const rosterWidth = defaultUIState.rosterWidth;
-    const newWidth = mouseX <= rosterWidth ? rosterWidth : mouseX;
-    return newWidth;
+    const screenWidth = document.body.clientWidth;
+    const maxRosterWidth = screenWidth - rosterWidth;
+    if (mouseX <= rosterWidth) {
+      return rosterWidth;
+    } else if (mouseX >= maxRosterWidth) {
+      return maxRosterWidth;
+    }
+    return mouseX;
+  }
+
+  onDblClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const currentRosterWidth = this.getState().ui.rosterWidth;
+    const defaultRosterWidth = defaultUIState.rosterWidth;
+    if (currentRosterWidth > defaultRosterWidth) {
+      this.dispatchChange(defaultRosterWidth);
+    } else {
+      const screenWidth = document.body.clientWidth;
+      const maxRosterWidth = screenWidth - defaultRosterWidth;
+      this.dispatchChange(maxRosterWidth);
+    }
   }
 
   onMouseUp(event) {
@@ -43,7 +92,7 @@ class TRMUISplitter extends ReduxMixin(Polymer.Element) {
     }
     document.body.style.userSelect = null;
     document.body.style.cursor = null;
-    
+
     document.body.removeEventListener('mouseup', this._onMouseUp);
     document.body.removeEventListener('mousemove', this._onMouseMove);
     document.body.removeChild(this.ghost);
@@ -85,6 +134,9 @@ class TRMUISplitter extends ReduxMixin(Polymer.Element) {
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('mousedown', this.onMouseDown.bind(this));
+    const handle = this.shadowRoot.querySelector('.handle');
+    handle.addEventListener('dblclick', this.onDblClick.bind(this));
+    handle.addEventListener('mousedown', event => event.stopPropagation());
   }
 }
 

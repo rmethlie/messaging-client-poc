@@ -57,9 +57,10 @@ function addContainer(state, action) {
     [newContainer.id]: newContainer
   });
   // set active if asked to.
-  if (action.data.active === true) {
+  if (action.data.active === true || !state.active) {
     state.active = newContainer.id;
   }
+
   // return the new containers object
   return state;
 }
