@@ -30,7 +30,7 @@ export default class Presence {
   }
 
   onUserUpdate({ xml, json, adapters }) {
-    console.log('[PRESENCE] User Update');
+    // console.log('[PRESENCE] User Update');
     const {jid, email, presence, status} = adapters.parseXMPPPresence(json);
     this.dispatch({
       type: 'PRESENCE.SET',

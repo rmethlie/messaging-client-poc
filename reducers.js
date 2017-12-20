@@ -18,6 +18,10 @@ import conversationsMiddleware from './conversations.middleware.js';
 import editor from './editor.reducer.js';
 import editorMiddleware from './editor.middleware.js';
 import ui from './ui.reducer.js';
+import quickSelect from './quickselect.reducer.js';
+import quickSelectMiddleware from './quickSelect.middleware.js';
+import wizard from './wizard.reducer.js';
+import wizardMiddleware from './wizard.middleware.js';
 
 
 export default {
@@ -34,5 +38,9 @@ export default {
   conversationsMiddleware,
   editor,
   editorMiddleware,
-  ui
+  ui,
+  quickSelect,
+  quickSelectMiddleware,
+  wizard,
+  wizardMiddleware
 }

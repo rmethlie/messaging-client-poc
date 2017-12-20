@@ -1,0 +1,32 @@
+<dom-module id="animation-keyframes">
+  <template>
+    <style>
+    @keyframes flash-border {
+      from {
+        border-color: #aaa;
+      }
+      to {
+        border-color: orange;
+      }
+    }
+
+    @keyframes flash-background {
+      from {background-color: rgba(100, 100, 100, 0.5);}
+      to {background-color: rgba(100, 100, 100, 0.2);}
+      from {background-color: rgba(100, 100, 100, 0.9);}
+      to {background-color: rgba(100, 100, 100, 0.5);}
+    }
+
+    @keyframes buzz {
+      from {
+        right: 24%;
+        left: 26%;
+      }
+      to {
+        right: 26%;
+        left: 24%;
+      }
+    }
+    </style>
+  </template>
+</dom-module>

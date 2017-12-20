@@ -4,26 +4,22 @@
   <template>
     <style>
       :host {
-      }
-
-      .presence {
         display: inline-block;
         width: 16px;
         height: 16px;
         border-radius: 4px;
-        background-color: rgba(100, 100, 100, 0.5);
       }
 
-      .presence.unavailable {
+      :host(.unavailable) {
         background-color: rgba(100, 100, 100, 0.5);
       }
-      .presence.available {
+      :host(.available) {
         background-color: rgba(50, 175, 75, 0.5);
       }
-      .presence.busy {
+      :host(.busy) {
         background-color: rgba(200, 25, 25, 0.5);
       }
-      .presence.away {
+      :host(.away) {
         background-color: rgba(200, 175, 75, 0.5);
       }
 

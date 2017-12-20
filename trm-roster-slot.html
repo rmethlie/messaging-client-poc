@@ -15,13 +15,15 @@
         color: white;
         flex-grow: 1;
         flex-basis: 15%;
-        padding: 3px 10px;
-        border: dotted transparent 1px;
+        padding: 0 10px;
+        border: solid transparent 1px;
         cursor: pointer;
       }
 
       :host(:hover) {
-        border: dotted orange 1px;
+        border: solid orange 1px;
+        transition-property: border-color;
+        transition-duration: 150ms;
       }
 
       .header {
@@ -38,11 +40,12 @@
         text-overflow: ellipsis;
         position: relative;
         top: -2px;
-        font-size: 12pt;
+        font-size: 12px;
       }
 
       trm-presence {
         display: inline-block;
+        margin-top: 5px;
       }
 
     </style>

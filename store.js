@@ -13,7 +13,11 @@ const {
   conversationsMiddleware,
   editor,
   editorMiddleware,
-  ui
+  ui,
+  quickSelect,
+  quickSelectMiddleware,
+  wizard,
+  wizardMiddleware
 } = reducers;
 const {
   createStore,
@@ -28,7 +32,9 @@ const combinedReducers =
     presence,
     conversations,
     editor,
-    ui
+    ui,
+    quickSelect,
+    wizard
   });
 const composeEnhancers =
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || Redux.compose
@@ -39,10 +45,12 @@ export const store = createStore(combinedReducers, composeEnhancers(
     rosterMiddleware,
     conversationsMiddleware,
     containersMiddleware,
-    editorMiddleware
+    editorMiddleware,
+    quickSelectMiddleware,
+    wizardMiddleware
   )
 ));
 
 // initialzeAPI(store);
 
-export const ReduxMixin = window.PolymerRedux(store);
+export const ReduxMixin = PolymerRedux(store);

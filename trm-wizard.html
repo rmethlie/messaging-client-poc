@@ -1,0 +1,101 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="../trm-toolbar.html">
+<link rel="import" href="../animation-keyframes.html">
+<link rel="import" href="../trm-wizard-choice.html">
+
+<dom-module id="trm-wizard">
+  <template>
+    <style include="animation-keyframes">
+      :host {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(100, 100, 100, 0.5);
+        z-index: 99;
+      }
+
+      :host(.open) {
+        display: block;
+      }
+
+      :host(.flash) {
+        animation-name: flash-background;
+        animation-duration: 125ms;
+        animation-iteration-count: 2;
+      }
+
+      .mask {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        cursor: progress;
+        z-index: 1;
+      }
+
+      .container {
+        position: absolute;
+        top: 25%;
+        right: 25%;
+        bottom: 25%;
+        left: 25%;
+        background-color: rgba(100, 100, 100, 0.9);
+        z-index: 2;
+        padding: 15px;
+        border: solid #aaa 2px;
+        border-radius: 5px;
+      }
+
+      .section {
+        padding: 10px;
+        border: solid white 1px;
+        background-color: #aaa;
+        border-radius: 5px;
+      }
+
+      .title {
+        font-size: 15pt;
+        color: white;
+      }
+
+      .choice:nth-of-type(2) {
+        background-color: rgb(150, 150, 150);
+      }
+
+      .choice {
+        background-color: rgb(100, 100, 100);
+        cursor: pointer;
+        padding: 5px 10px;
+        margin: 5px 0;
+        border: solid transparent 1px;
+      }
+
+      .choice.default {
+        border: solid #ff7700 1px;
+        background-color: rgb(175, 175, 175);
+      }
+
+      .choice:hover {
+        border: solid orange 1px;
+        background-color: rgb(200,200,200);
+      }
+
+    </style>
+    <div class="mask"></div>
+    <div class="container">
+      <div class="title">{{title}}</div>
+      <div class="section choices"></div>
+      <div class="section buttons">
+        <button on-click="handleCloseClick">Close</button>
+      </div>
+    </div>
+  </template>
+
+  <script type="module" src="trm-wizard.js"></script>
+</dom-module>

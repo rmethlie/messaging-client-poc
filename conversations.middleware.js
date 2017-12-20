@@ -20,17 +20,16 @@ export default function conversationsMiddleware({ dispatch, getState }) {
             data: action.data
           });
           const activeContainer = getState().containers.active || 'conversations';
+          const parent = action.data.id || activeContainer;
           const id = action.data.jid;
+          const slot = Object.assign({}, {id});
           dispatch({
             type: 'ADD_SLOT',
-            data: {
-              parent: activeContainer,
-              slot: Object.assign({}, {id})
-            }
+            data: {parent, slot}
           });
           dispatch({
             type: 'SET_ACTIVE',
-            data: {id: activeContainer.id}
+            data: {id: parent}
           })
           break;
         case 'API.CONVERSATIONS.CLOSE':

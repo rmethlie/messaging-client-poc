@@ -4,7 +4,7 @@
 <link rel="import" href="../trm-toolbar.html">
 <link rel="import" href="../trm-roster-slot.html">
 <link rel="import" href="../trm-roster-group-container.html">
-
+<link rel="import" href="../trm-quick-select.html">
 <dom-module id="trm-roster-container">
   <template>
     <style>
@@ -61,6 +61,7 @@
       }
 
     </style>
+    <trm-quick-select type="roster"></trm-quick-select>
     <div class="title">{{title}}</div>
     <trm-toolbar data-container-id$="{{id}}">
       <template is="dom-repeat" items="{{tools}}">

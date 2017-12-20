@@ -1,0 +1,48 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="../trm-toolbar.html">
+<link rel="import" href="../animation-keyframes.html">
+<dom-module id="trm-wizard-choice">
+  <template>
+    <style include="animation-keyframes">
+      :host {
+        display: block;
+      }
+
+      :host(.flash) {
+        animation-name: flash-background;
+        animation-duration: 125ms;
+        animation-iteration-count: 2;
+      }
+
+      :host(.default) {
+        border: solid #ff7700 1px;
+        background-color: rgb(175, 175, 175);
+      }
+
+      :host(:hover) {
+        border: solid orange 1px;
+        background-color: rgb(200,200,200);
+      }
+
+    </style>
+    <template is="dom-if" if="{{isButton()}}">
+      <button on-click="handleButtonClick" data-id$="{{id}}">{{title}}</button>
+    </template>
+    <template is="dom-if" if="{{isEmail()}}">
+      <input on-change="handleEmailChange" id$="{{id}}" type="email" placeholder$="{{title}}"></input>
+    </template>
+    <template is="dom-if" if="{{isPassword()}}">
+      <input on-change="handlePasswordChange" id$="{{id}}" type="password" placeholder$="{{title}}"></input>
+    </template>
+    <template is="dom-if" if="{{isText()}}">
+      <input on-change="handleTextChange" id$="{{id}}" type="text" placeholder$="{{title}}"></input>
+    </template>
+    <template is="dom-if" if="{{isUnknown()}}">
+      <button style="color: darkgreen;" id="unknown">unknown</button>
+    </template>
+  </template>
+
+  <script type="module" src="trm-wizard-choice.js"></script>
+</dom-module>

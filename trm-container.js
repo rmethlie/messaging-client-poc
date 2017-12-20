@@ -197,14 +197,20 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
         }
         if (this.containerType === 'container') {
           this.dispatch({
-            type: 'ADD_SLOT',
+            type: 'API.WIZARD.OPEN',
             data: {
-              parent: id,
-              slot: {
-                title: `Content for ${id}`
-              }
+              type: 'CREATE_CONVERSATION'
             }
           });
+          // this.dispatch({
+          //   type: 'ADD_SLOT',
+          //   data: {
+          //     parent: id,
+          //     slot: {
+          //       title: `Content for ${id}`
+          //     }
+          //   }
+          // });
         }
         break;
 
@@ -255,6 +261,22 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
           data: {id}
         });
         break;
+
+      case 'ADD_ROSTER_SLOT': {
+        this.dispatch({
+          type: 'API.WIZARD.OPEN',
+          data: {type: 'ADD_ROSTER_ITEM'}
+        });
+        break;
+      }
+
+      case 'ADD_ROSTER_CONTAINER': {
+        this.dispatch({
+          type: 'API.WIZARD.OPEN',
+          data: {title: 'Add Roster Group'}
+        });
+        break;
+      }
 
     }
   }

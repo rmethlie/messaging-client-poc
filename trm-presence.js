@@ -6,22 +6,38 @@
  * @polymer
  * @trm3 index.html
  */
-import { ReduxMixin } from './store.js';
-export default class TRMPresence extends ReduxMixin(Polymer.Element) {
+import { store } from './store.js';
+export default class TRMPresence extends Polymer.Element {
   static get is() { return 'trm-presence'; }
   static get properties() {
     return {
-      jid: String,
-      presenceClasses: {
-        type: String,
-        statePath: function(state) {
-          const presenceItem = state.presence[this.get('jid')];
-          if (presenceItem) {
-            return `presence ${presenceItem.presence}`;
-          }
-          return 'presence unknown';
-        }
-      }
+      jid: String
+    }
+  }
+
+  constructor() {
+    super();
+    this.getState = store.getState.bind(store);
+    this.currentPresence = this.readPresenceFromStore();
+    this.classList = [this.currentPresence];
+    store.subscribe(this.onStoreChange.bind(this));
+  }
+
+  readPresenceFromStore() {
+    const item = this.getState().presence[this.get('jid')];
+    if (item) {
+      return item.presence;
+    }
+    return 'unavailable';
+  }
+
+  onStoreChange() {
+    const storedPresence = this.readPresenceFromStore();
+    if (storedPresence !== this.currentPresence) {
+      // cache the value
+      this.currentPresence = storedPresence;
+      // set the class
+      this.classList = [this.currentPresence];
     }
   }
 }

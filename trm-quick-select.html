@@ -1,0 +1,63 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../trm-presence.html">
+
+<dom-module id="trm-quick-select">
+  <template>
+    <style>
+      :host {
+        position: relative;
+        display: block;
+        margin: 3px;
+        background-color: rgba(50, 50, 50, 0.8);
+        color: white;
+        flex-grow: 1;
+        flex-basis: 15%;
+        padding: 0 10px;
+        cursor: pointer;
+        background-color: blue;
+        border: solid #aaa 1px;
+      }
+
+      input {
+      }
+
+      .results {
+        position: absolute;
+        top: 20px;
+        left: 0;
+        /*height: 200px;*/
+        width: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        z-index: 9999999;
+        background-color: blue;
+      }
+
+      .result {
+        padding: 0 5px;
+        margin: 5px 0;
+      }
+
+      .result.selected {
+        border: solid orange 1px;
+      }
+
+    </style>
+    <div class="search-box">
+      <input placeholder="quick select">
+    </div>
+    <div class="results">
+      <div class="list category roster">
+        <template is="dom-repeat" items={{results}}>
+          <div class="result">
+            <button value$="{{item.jid}}">{{item.name}}</button>
+          </div>
+        </template>
+      </div>
+    </div>
+  </template>
+
+  <script type="module" src="trm-quick-select.js"></script>
+</dom-module>

@@ -4,6 +4,7 @@
 <link rel="import" href="../trm-toolbar.html">
 <link rel="import" href="../trm-conversation-slot.html">
 <link rel="import" href="../trm-editor.html">
+<link rel="import" href="../trm-quick-select.html">
 
 <dom-module id="trm-conversation-container">
   <template>
@@ -109,8 +110,13 @@
         width: 8px;
       }
 
+      trm-quick-select {
+        /*top: -32px;*/
+      }
+
 
     </style>
+    <trm-quick-select width="200px" type="roster"></trm-quick-select>
     <div class="title">{{title}}</div>
     <trm-toolbar on-toolbaraction="handleToolClick" on-click="handleToolClick" id="toolbar" data-container-id$="{{id}}">
       <template is="dom-repeat" items="{{tools}}">
