@@ -26,22 +26,38 @@
         background-color: rgb(200,200,200);
       }
 
+      .type {
+        /* types are hidden by default */
+        display: none;
+      }
+
+      .quickselect-items {
+        height: 100px;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
     </style>
-    <template is="dom-if" if="{{isButton()}}">
+    <div class="type" data-type="button">
       <button on-click="handleButtonClick" data-id$="{{id}}">{{title}}</button>
-    </template>
-    <template is="dom-if" if="{{isEmail()}}">
+    </div>
+    <div class="type" data-type="email">
       <input on-change="handleEmailChange" id$="{{id}}" type="email" placeholder$="{{title}}"></input>
-    </template>
-    <template is="dom-if" if="{{isPassword()}}">
+    </div>
+    <div class="type" data-type="password">
       <input on-change="handlePasswordChange" id$="{{id}}" type="password" placeholder$="{{title}}"></input>
-    </template>
-    <template is="dom-if" if="{{isText()}}">
+    </div>
+    <div class="type" data-type="text">
       <input on-change="handleTextChange" id$="{{id}}" type="text" placeholder$="{{title}}"></input>
-    </template>
-    <template is="dom-if" if="{{isUnknown()}}">
+    </div>
+    <div class="type" data-type="unknown">
       <button style="color: darkgreen;" id="unknown">unknown</button>
-    </template>
+    </div>
+    <div class="type" data-type="quickselect">
+      <trm-quick-select type="roster"></trm-quick-select>
+      <div class="quickselect-items"></div>
+      <button on-click="handleQuickSelectSubmit">Add</button>
+    </div>
   </template>
 
   <script type="module" src="trm-wizard-choice.js"></script>

@@ -186,32 +186,12 @@ export default class TRMContainer extends ReduxMixin(Polymer.Element) {
         }
         break;
       case 'ADD_CONTAINER':
-        if (this.containerType === 'root') {
-          this.dispatch({
-            type: 'ADD_CONTAINER',
-            data: {
-              parent: id,
-              active: true
-            }
-          });
-        }
-        if (this.containerType === 'container') {
-          this.dispatch({
-            type: 'API.WIZARD.OPEN',
-            data: {
-              type: 'CREATE_CONVERSATION'
-            }
-          });
-          // this.dispatch({
-          //   type: 'ADD_SLOT',
-          //   data: {
-          //     parent: id,
-          //     slot: {
-          //       title: `Content for ${id}`
-          //     }
-          //   }
-          // });
-        }
+        this.dispatch({
+          type: 'API.WIZARD.OPEN',
+          data: {
+            type: 'CREATE_CONVERSATION'
+          }
+        });
         break;
 
       case 'ADD_SLOT':

@@ -48,6 +48,13 @@ export default class TRMWizardChoice extends ReduxMixin(Polymer.Element) {
     }
   }
 
+  ready() {
+    super.ready();
+    const type = this.getCapitalizedType();
+    const init = this[`init${type}`];
+    init.call(this);
+  }
+
   flash() {
     this.classList.add('flash');
   }
@@ -103,6 +110,31 @@ export default class TRMWizardChoice extends ReduxMixin(Polymer.Element) {
     }));
   }
 
+  handleQuickSelect(event) {
+    const jid = event.detail.value;
+    if (this.quickSelectItems.indexOf(jid) === -1) {
+      console.log('wizard added jid', jid);
+      this.quickSelectItems.push(jid);
+      const items = this.shadowRoot.querySelector('.quickselect-items');
+      const item = document.createElement('div');
+      item.innerHTML = jid;
+      items.appendChild(item);
+    }
+  }
+
+  handleQuickSelectSubmit() {
+    const value = this.quickSelectItems;
+    const id = this.getAttribute('id');
+    this.dispatchEvent(new CustomEvent('wizard-choice', {
+      detail: {id, value},
+      bubbles: true,
+      composed: true
+    }));
+
+    const items = this.shadowRoot.querySelector('.quickselect-items');
+    items.innerHTML = '';
+  }
+
   dispatchChosen() {
     this.dispatch({
       type: 'API.WIZARD.CLOSE'
@@ -120,6 +152,13 @@ export default class TRMWizardChoice extends ReduxMixin(Polymer.Element) {
     }
   }
 
+  getCapitalizedType() {
+    const type = this.getType() || 'unknown';
+    if (type) {
+      return `${type.charAt(0).toUpperCase()}${type.slice(1)}`;
+    }
+  }
+
   getType() {
     const id = this.getAttribute('id');
     const choices = this.getState().wizard.choices;
@@ -127,28 +166,49 @@ export default class TRMWizardChoice extends ReduxMixin(Polymer.Element) {
     return choice ? choice.type : 'unknown';
   }
 
-  isButton() {
-    return this.getType() === 'button';
+  getTypeContainer() {
+    const type = this.getType();
+    return this.shadowRoot.querySelector(`[data-type="${type}"]`);
   }
 
-  isEmail() {
-    return this.getType() === 'email';
+  showContainer(container) {
+    container.style.display = 'block';
   }
 
-  isChatroom() {
-    return this.getType() === 'chatroom';
+  hideContainer(container) {
+    container.style.display = 'none';
   }
 
-  isText() {
-    return this.getType() === 'text';
+  initButton() {
+    // just need to show it
+    this.getTypeContainer().style.display = 'block';
   }
 
-  isUnknown() {
-    return this.getType() === 'unknown';
+  initEmail() {
+    const container = this.getTypeContainer();
+    this.showContainer(container);
   }
 
-  isPassword() {
-    return this.getType() === 'password';
+  initText() {
+    const container = this.getTypeContainer();
+    this.showContainer(container);
+  }
+
+  initUnknown() {
+    const container = this.getTypeContainer();
+    this.showContainer(container);
+  }
+
+  initPassword() {
+    const container = this.getTypeContainer();
+    this.showContainer(container);
+  }
+
+  initQuickselect() {
+    const container = this.getTypeContainer();
+    container.addEventListener('quickselect', this.handleQuickSelect.bind(this));
+    this.showContainer(container);
+    this.quickSelectItems = [];
   }
 }
 
